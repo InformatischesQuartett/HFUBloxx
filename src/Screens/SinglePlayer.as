@@ -18,8 +18,8 @@ package Screens
 		{
 			super();
 			
-			//var bg:Image = new Image(Assets.getTextue("bg"));
-			//this.addChild(bg);
+			var backgroundGame:Image = new Image(Assets.getTexture("bg_Game"));
+			this.addChild(backgroundGame);
 			
 		}
 		
