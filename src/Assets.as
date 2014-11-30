@@ -8,9 +8,16 @@
 	public class Assets
 	{
 		
-		// Buttons
+		// Game
+		
 		[Embed(source="../assets/textures/hfu-Bloxx_Screendesign.png")]
 		public static const bg:Class;
+		
+		[Embed(source="../assets/textures/hg_Bloxx.png")]
+		public static const bg_Game:Class;
+		
+		
+		// Buttons
 		
 		[Embed(source="../assets/textures/play_button.png")]
 		public static const play_Button:Class;
