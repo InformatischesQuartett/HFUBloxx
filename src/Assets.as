@@ -1,4 +1,4 @@
-package
+﻿package
 {
 	import flash.display.Bitmap;
 	import flash.utils.Dictionary;
@@ -9,6 +9,9 @@ package
 	{
 		[Embed(source="../assets/textures/hfu-Bloxx_Screendesign.png")]
 		public static const bg:Class;
+		
+		[Embed(source="../assets/textures/play_button.png")]
+		public static const playButton:Class;
 		
 		
 		
