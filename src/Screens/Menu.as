@@ -13,11 +13,17 @@ package Screens
 		{
 			super();
 
-			var bg : Image = new Image(Assets.getTextue("bg"));
-			//trace(stage.stageHeight);
+			var bg : Image = new Image(Assets.getTexture("bg"));
 			bg.width = HFUBloxx.GameWidth;
 			bg.height = HFUBloxx.GameHeight;
 			this.addChild(bg);
+			
+			var playButton : Button = new Button(Assets.getTexture("playButton"));
+			playButton.x = 336;
+			playButton.y = 250;
+			this.addChild(playButton);
+			playButton.addEventListener(Event.TRIGGERED, plyBtn_onClick);
+			
 			
 			/*
 			var logo:Image = new Image(Assets.getTextue("logo"));
@@ -45,14 +51,14 @@ package Screens
 			*/
 		}
 		
-		public function plyBtn_Click(event:Event):void
+		public function plyBtn_onClick(event:Event):void
 		{
 			var screen:Sprite = new SinglePlayer();
 			this.parent.addChild(screen);
 			this.removeFromParent(true);
 		}
 		
-		public function userScore_Click(event:Event):void
+		public function userScore_onClick(event:Event):void
 		{
 			/*
 			var screen:Sprite = new App42LeaderBoard();
