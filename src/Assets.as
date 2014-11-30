@@ -11,10 +11,17 @@
 		public static const bg:Class;
 		
 		[Embed(source="../assets/textures/play_button.png")]
-		public static const playButton:Class;
+		public static const play_Button:Class;
 		
-		[Embed(source="../assets/textures/play_button.png")]
-		public static const playButton:Class;
+		[Embed(source="../assets/textures/y_button.png")]
+		public static const y_Button:Class;
+		
+		[Embed(source="../assets/textures/left_button.png")]
+		public static const left_Button:Class;
+		
+		[Embed(source="../assets/textures/right_button.png")]
+		public static const right_Button:Class;
+		
 		
 		
 		
