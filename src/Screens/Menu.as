@@ -25,8 +25,10 @@ package Screens
 			playButton.addEventListener(Event.TRIGGERED, plyBtn_onClick);
 			
 			var scoreButton : Button = new Button(Assets.getTexture("y_Button"));
-			scoreButton.x = 85;
-			scoreButton.y = 50;
+			scoreButton.width = 100;
+			scoreButton.height = 100;
+			scoreButton.x = (playButton.x + playButton.width) + 10;
+			scoreButton.y = (playButton.y);
 			this.addChild(scoreButton);
 			
 			
