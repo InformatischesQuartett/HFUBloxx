@@ -7,6 +7,8 @@
 
 	public class Assets
 	{
+		
+		// Buttons
 		[Embed(source="../assets/textures/hfu-Bloxx_Screendesign.png")]
 		public static const bg:Class;
 		
@@ -21,6 +23,37 @@
 		
 		[Embed(source="../assets/textures/right_button.png")]
 		public static const right_Button:Class;
+		
+		[Embed(source="../assets/textures/button_controller.png")]
+		public static const controller_Button:Class;
+		
+		[Embed(source="../assets/textures/button_herz.png")]
+		public static const herz_Button:Class;
+		
+		[Embed(source="../assets/textures/button_time.png")]
+		public static const time_Button:Class;
+		
+		
+		
+		//Spieliguren
+		
+		[Embed(source="../assets/textures/avatar_gre.png")]
+		public static const avatar_Green:Class;
+		
+		[Embed(source="../assets/textures/avatar_red.png")]
+		public static const avatar_Red:Class;
+		
+		[Embed(source="../assets/textures/avatar_yel.png")]
+		public static const avatar_Yellow:Class;
+		
+		[Embed(source="../assets/textures/avatar_vio.png")]
+		public static const avatar_Voilet:Class;
+		
+		
+		
+		
+		
+		
 		
 		
 		
