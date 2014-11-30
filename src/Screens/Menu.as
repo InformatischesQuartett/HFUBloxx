@@ -19,7 +19,7 @@ package Screens
 			this.addChild(bg);
 			
 			var playButton : Button = new Button(Assets.getTexture("play_Button"));
-			playButton.x = 336;
+			playButton.x = HFUBloxx.GameWidth/3;
 			playButton.y = 250;
 			this.addChild(playButton);
 			playButton.addEventListener(Event.TRIGGERED, plyBtn_onClick);
