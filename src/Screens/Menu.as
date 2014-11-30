@@ -18,11 +18,16 @@ package Screens
 			bg.height = HFUBloxx.GameHeight;
 			this.addChild(bg);
 			
-			var playButton : Button = new Button(Assets.getTexture("playButton"));
+			var playButton : Button = new Button(Assets.getTexture("play_Button"));
 			playButton.x = 336;
 			playButton.y = 250;
 			this.addChild(playButton);
 			playButton.addEventListener(Event.TRIGGERED, plyBtn_onClick);
+			
+			var scoreButton : Button = new Button(Assets.getTexture("y_Button"));
+			scoreButton.x = 85;
+			scoreButton.y = 50;
+			this.addChild(scoreButton);
 			
 			
 			/*

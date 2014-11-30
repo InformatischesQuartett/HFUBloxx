@@ -8,7 +8,6 @@
 	public class BloxxGame extends Sprite {
 
 		public function BloxxGame() {
-			// constructor code
 			//calls constructor of super class
 			super();
 			
