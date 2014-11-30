@@ -12,12 +12,13 @@ package Screens
 		{
 			
 			super();
-			/*
+			
 			score = s;
 			new App42LeaderBoard().saveUserScore(score);
-			var bg:Image = new Image(Assets.getTextue("bg"));
+			var bg:Image = new Image(Assets.getTexture("bg"));
 			this.addChild(bg);
 			
+			/*
 			var logo:Image = new Image(Assets.getTextue("logo"));
 			logo.x = 85;
 			logo.y = 50;
@@ -41,7 +42,7 @@ package Screens
 			*/
 		}
 		
-		public function menuBtn_Click(event:Event):void
+		public function menuBtn_onClick(event:Event):void
 		{
 			var screen:Sprite = new Menu;
 			this.parent.addChild(screen);
