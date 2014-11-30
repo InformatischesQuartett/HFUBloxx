@@ -13,6 +13,9 @@
 		[Embed(source="../assets/textures/play_button.png")]
 		public static const playButton:Class;
 		
+		[Embed(source="../assets/textures/play_button.png")]
+		public static const playButton:Class;
+		
 		
 		
 		/*
@@ -63,7 +66,7 @@
 		
 		private static var gameTextures:Dictionary = new Dictionary();
 		
-		public static function getTextue(name:String):Texture
+		public static function getTexture(name:String):Texture
 		{
 			if(gameTextures[name] == undefined)
 			{
