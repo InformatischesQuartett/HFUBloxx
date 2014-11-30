@@ -12,11 +12,14 @@ package Screens
 		public function Menu()
 		{
 			super();
-			
-			/*
-			var bg:Image = new Image(Assets.getTextue("bg"));
+
+			var bg : Image = new Image(Assets.getTextue("bg"));
+			//trace(stage.stageHeight);
+			bg.width = HFUBloxx.GameWidth;
+			bg.height = HFUBloxx.GameHeight;
 			this.addChild(bg);
 			
+			/*
 			var logo:Image = new Image(Assets.getTextue("logo"));
 			logo.x = 85;
 			logo.y = 50;
