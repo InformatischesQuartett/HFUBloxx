@@ -1,6 +1,12 @@
-﻿package  {
+﻿package src {
 	
 	import flash.display.MovieClip;
+	//import engine libs
+	import flash.display.Sprite;
+	import starling.core.Starling;
+	
+	//settings
+	[SWF(frameRate="60", width="800", height="480")]
 	
 	/**
 		This is the main document class of the game HFUBloxx.
@@ -12,9 +18,13 @@
 	**/
 	public class DocumentClass extends MovieClip {
 		
+		private var myStarling:Starling;
 		
 		public function DocumentClass() {
-			// constructor code
+			//start game engine
+			myStarling = new Starling(BloxxGame, stage);
+			myStarling.antiAliasing = 2;
+			myStarling.start();
 		}
 	}
 	
