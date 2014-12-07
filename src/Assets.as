@@ -42,6 +42,7 @@
 		
 		
 		
+		
 		//Spieliguren
 		
 		[Embed(source="../assets/textures/avatar_gre.png")]
@@ -55,6 +56,87 @@
 		
 		[Embed(source="../assets/textures/avatar_vio.png")]
 		public static const avatar_Voilet:Class;
+		
+		
+		
+		// BloXX
+		
+		[Embed(source="../assets/textures/bloxx_green1.png")]
+		public static const bloxx_Green1:Class;
+		
+		[Embed(source="../assets/textures/bloxx_green2.png")]
+		public static const bloxx_Green2:Class;
+		
+		[Embed(source="../assets/textures/bloxx_turquoise.png")]
+		public static const bloxx_Turquoise:Class;
+		
+		[Embed(source="../assets/textures/bloxx_blue.png")]
+		public static const bloxx_Blue:Class;
+		
+		[Embed(source="../assets/textures/bloxx_yellow.png")]
+		public static const bloxx_Yellow:Class;
+		
+		[Embed(source="../assets/textures/bloxx_gray.png")]
+		public static const bloxx_Gray:Class;
+		
+		[Embed(source="../assets/textures/bloxx_red.png")]
+		public static const bloxx_Red:Class;
+		
+		[Embed(source="../assets/textures/bloxx_lilac.png")]
+		public static const bloxx_Lilac:Class;
+		
+		[Embed(source="../assets/textures/bloxx_orange.png")]
+		public static const bloxx_Orange:Class;
+		
+		
+		// Pipes
+		
+		[Embed(source="../assets/textures/pipe_blue.png")]
+		public static const pipe_Blue:Class;
+		
+		[Embed(source="../assets/textures/pipe_green.png")]
+		public static const pipe_Green:Class;
+		
+		[Embed(source="../assets/textures/pipe_pink.png")]
+		public static const pipe_Pink:Class;
+		
+		[Embed(source="../assets/textures/bloxx_yellow.png")]
+		public static const pipe_Yellow:Class;
+		
+		
+		// Hüte
+		
+		[Embed(source="../assets/textures/hat_blue.png")]
+		public static const hat_Blue:Class;
+		
+		[Embed(source="../assets/textures/hat_green.png")]
+		public static const hat_Green:Class;
+		
+		[Embed(source="../assets/textures/hat_pink.png")]
+		public static const hat_Pink:Class;
+		
+		[Embed(source="../assets/textures/hat_yellow.png")]
+		public static const hat_Yellow:Class;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
