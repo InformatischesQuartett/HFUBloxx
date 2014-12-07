@@ -58,9 +58,13 @@ package Screens
 			*/
 		}
 		
+		/**
+		 * Listener Event for clicking the Play Button
+		 * By clicking the game will start.
+		 **/
 		public function plyBtn_onClick(event:Event):void
 		{
-			var screen:Sprite = new SinglePlayer();
+			var screen : Sprite = new MainGame();
 			this.parent.addChild(screen);
 			this.removeFromParent(true);
 		}

@@ -1,6 +1,5 @@
-
-package Screens
-{
+package Screens {
+	
 	import flash.events.KeyboardEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
@@ -10,12 +9,8 @@ package Screens
 	import starling.display.Sprite;
 	import starling.text.TextField;
 	
-	public class SinglePlayer extends Sprite
-	{
-		
-		
-		public function SinglePlayer()
-		{
+	public class MainGame extends Sprite {
+		public function MainGame() {
 			super();
 			var bg : Image = new Image(Assets.getTexture("bg"));
 			bg.width = HFUBloxx.GameWidth;
@@ -26,10 +21,6 @@ package Screens
 			backgroundGame.width = HFUBloxx.GameWidth/2;
 			backgroundGame.height = HFUBloxx.GameHeight;
 			this.addChild(backgroundGame);
-			
 		}
-		
-		
-		
 	}
 }
