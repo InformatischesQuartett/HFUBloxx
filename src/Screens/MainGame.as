@@ -13,6 +13,7 @@ package Screens {
 	
 	public class MainGame extends Sprite {
 		
+		/*Game Variables */
 		private var colorBloxxArray : Array;
 		private var colorHatPipeArray : Array;
 		private var colorPlayerArray : Array;
