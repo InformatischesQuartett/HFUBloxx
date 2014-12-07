@@ -54,8 +54,8 @@
 		[Embed(source="../assets/textures/avatar_yel.png")]
 		public static const avatar_Yellow:Class;
 		
-		[Embed(source="../assets/textures/avatar_vio.png")]
-		public static const avatar_Voilet:Class;
+		[Embed(source="../assets/textures/avatar_lil.png")]
+		public static const avatar_Lilac:Class;
 		
 		
 		
