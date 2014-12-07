@@ -12,6 +12,9 @@ package GameObjects {
 		
 		private var bloxxSize : int = 16; //todo: set correct size
 		private var bloxxImage : Image;
+		private var posX : int;
+		private var posY : int;
+		
 		
 		public function Bloxx() {
 			////todo: make switch case/ or use array for different textures

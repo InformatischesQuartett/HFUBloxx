@@ -7,7 +7,7 @@ package Screens
 	
 	public class GameOver extends Sprite
 	{
-		private var score:int;
+		private var score : int;
 		public function GameOver(s:int)
 		{
 			
