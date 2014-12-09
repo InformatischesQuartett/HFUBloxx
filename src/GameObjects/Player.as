@@ -4,11 +4,9 @@ package GameObjects {
 	
 	//try to minimize these imports later on
 	import flash.events.Event;
-	import flash.events.KeyboardEvent;
-	import flash.events.MouseEvent;
-	import flash.events.TimerEvent;
-	import flash.utils.Timer;
-	
+	//import flash.events.KeyboardEvent;
+	//import flash.events.MouseEvent;
+		
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
