@@ -2,6 +2,13 @@ package GameObjects {
 	
 	import HFUBloxx;
 	
+	//try to minimize these imports later on
+	import flash.events.Event;
+	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
+	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -12,8 +19,8 @@ package GameObjects {
 	 **/
 	public class Player extends Sprite {
 		
-		//walking speed
-		private var speed : int = 100;
+		//walking speed --> set in an external xml file
+		private var playerSpeed : int = 100; // = int(HFUBloxx.xmlContent.Player.playerSpeed.@ps);
 		//image
 		private var playerImage : Image;
 		
@@ -22,6 +29,10 @@ package GameObjects {
 		 **/
 		public function Player(color : String) {
 			super();
+			
+			//set up event listener which is called per frame
+			Starling.current.nativeStage.addEventListener(Event.ENTER_FRAME, update);
+			
 			//set image of the ghost according to player's choice
 			playerImage =  new Image(Assets.getTexture(color));
 			playerImage.width = HFUBloxx.playerSize;
@@ -35,6 +46,51 @@ package GameObjects {
 			this.addChild(playerImage);
 			
 			trace("player spawned " + playerImage.x + playerImage);
+		}//constructor end
+		
+		/**
+		 * Method is called each frame from event listener above.
+		 **/ 
+		public function update (_event : Event) : void {
+			trace("This is the Player's Update method");
+			//check for collision
+			checkCollision();
+			
+			//movement
+			//if (HFUBloxx.left) {
+			//	playerMove("left");
+			//}
+			
+		}//end update method
+		
+		/**
+		 * Checks if avatar hits objects
+		 **/ 
+		public function checkCollision() : void {
+			
 		}
-	}
+		
+		/**
+		 * Handles the Player's Movement
+		 **/
+		public function playerMove(directions : String) : void {
+			var tempX : int;
+			switch (directions) {
+				case "left":
+					tempX = this.x - playerSpeed;
+					break;
+				case "right":
+					tempX = this.x + playerSpeed;
+					break;
+				case "up":
+					break;
+				case "down":
+					break;
+				default:
+					break;
+			} //end switch
+			
+			//check for stage edges
+		}
+	}//class end
 }

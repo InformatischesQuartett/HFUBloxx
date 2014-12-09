@@ -7,6 +7,8 @@
 
 	public class Assets
 	{
+		//Configurational Data from external Data file
+		public var xmlContent : XML;
 		
 		// Game
 		

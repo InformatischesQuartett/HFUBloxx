@@ -15,6 +15,7 @@ package Screens
 		private const blockSize:int = 16;
 		private var snake:Array;
 		private var direction:int;
+		
 		private var speed:int = 100;
 		private var food:Image;
 		private var score:int = 0;
