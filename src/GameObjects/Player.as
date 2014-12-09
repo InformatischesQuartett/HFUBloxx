@@ -50,7 +50,6 @@ package GameObjects {
 		 * Method is called each frame from event listener above.
 		 **/ 
 		public function update (_event : Event) : void {
-			trace("This is the Player's Update method");
 			//check for collision
 			checkCollision();
 			
