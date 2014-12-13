@@ -4,9 +4,11 @@ package GameObjects {
 	
 	import Screens.MainGame;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
 	import flashx.textLayout.formats.BackgroundColor;
+	import flashx.textLayout.formats.Float;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -20,7 +22,8 @@ package GameObjects {
 	public class Player extends Sprite {
 		
 		//walking speed --> set in an external xml file
-		private var playerSpeed : int = 4; // = int(HFUBloxx.xmlContent.Player.playerSpeed.@ps);
+		private var walkSpeed : int = 4; // = int(HFUBloxx.xmlContent.Player.playerSpeed.@ps);
+		private var jumpSpeed : int = 10;
 		//image
 		private var playerImage : Image;
 		
@@ -78,7 +81,12 @@ package GameObjects {
 		 * Checks if avatar hits objects
 		 **/ 
 		public function checkCollision() : void {
-			
+			for each (var oCollider:Object in HFUBloxx.colliderArray){
+				if (this.getBounds(this.parent).intersects(oCollider.getBounds(MainGame.testHat.parent)))
+				{
+					//Starling.current.nativeStage.removeChild(oCollider);
+				}
+			}
 		}
 		
 		/**
@@ -89,14 +97,14 @@ package GameObjects {
 			var tempY : int;
 			switch (directions) {
 				case "left":
-					tempX = this.x - playerSpeed;
+					tempX = this.x - walkSpeed;
 					//trace("");
 					break;
 				case "right":
-					tempX = this.x + playerSpeed;
+					tempX = this.x + walkSpeed;
 					break;
 				case "up":
-					tempY = this.y - playerSpeed;
+					tempY = this.y - jumpSpeed;
 					break;
 				case "down":
 					break;
@@ -107,21 +115,22 @@ package GameObjects {
 			//check for stage edges
 			if ((tempX > 0 - (MainGame.backgroundGame.width / 2 - HFUBloxx.borderSize)) && (tempX < MainGame.backgroundGame.width))
 			{
-				
-				
 				if(directions == "left" || directions == "right"){
-					trace("Right and left");
 					this.x = tempX;
 				}else if(directions == "up"){
 					this.y = tempY;
 				}
-			
 			}
 		}
 		
-		public function doPhysic() : void{
+		public function doPhysic() : void{			
 			forceFall  += 1;
-			//this.y += forceFall;			
+			if(this.y < 0){
+				this.y += forceFall;			
+			}else{
+				forceFall = 0;
+				this.y -= 1;
+			}
 		}
 		
 	}//class end
