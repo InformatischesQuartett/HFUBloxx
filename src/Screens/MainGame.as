@@ -22,6 +22,8 @@ package Screens {
 		
 		private var playerOne : Player;
 		private var playerTwo : Player;
+		
+		public static var backgroundGame : Image;
 
 		public function MainGame() {
 			//call super class' constructor
@@ -43,7 +45,7 @@ package Screens {
 			this.addChild(bg);
 			
 			//set background Texture of game
-			var backgroundGame:Image = new Image(Assets.getTexture("bg_Game"));
+			backgroundGame = new Image(Assets.getTexture("bg_Game"));
 			backgroundGame.width = HFUBloxx.GameWidth/2;
 			backgroundGame.height = HFUBloxx.GameHeight;
 			this.addChild(backgroundGame);

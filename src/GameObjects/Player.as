@@ -1,16 +1,18 @@
 package GameObjects {
 	
-	import HFUBloxx;
+	//import HFUBloxx;
 	
-	//try to minimize these imports later on
+	import Screens.MainGame;
+	
 	import flash.events.Event;
-	//import flash.events.KeyboardEvent;
-	//import flash.events.MouseEvent;
-		
+	
+	import flashx.textLayout.formats.BackgroundColor;
+	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.text.TextField;
+	
 	
 	/**
 	 * This class describes a Player
@@ -18,9 +20,13 @@ package GameObjects {
 	public class Player extends Sprite {
 		
 		//walking speed --> set in an external xml file
-		private var playerSpeed : int = 100; // = int(HFUBloxx.xmlContent.Player.playerSpeed.@ps);
+		private var playerSpeed : int = 4; // = int(HFUBloxx.xmlContent.Player.playerSpeed.@ps);
 		//image
 		private var playerImage : Image;
+		
+		//Gravity
+		private var forceFall : int = 0;
+		private var fallSpeed : int  = 0.5;
 		
 		/**
 		 * Constructor
@@ -52,11 +58,19 @@ package GameObjects {
 		public function update (_event : Event) : void {
 			//check for collision
 			checkCollision();
+			doPhysic();
 			
-			//movement
-			//if (HFUBloxx.left) {
-			//	playerMove("left");
-			//}
+			var test : Boolean = true;
+			
+			
+			//movement			
+			if (HFUBloxx.left) {
+				playerMove("left");
+			}else if(HFUBloxx.right){
+				playerMove("right");
+			}else if(HFUBloxx.up){
+				playerMove("up");
+			}
 			
 		}//end update method
 		
@@ -72,14 +86,17 @@ package GameObjects {
 		 **/
 		public function playerMove(directions : String) : void {
 			var tempX : int;
+			var tempY : int;
 			switch (directions) {
 				case "left":
 					tempX = this.x - playerSpeed;
+					//trace("");
 					break;
 				case "right":
 					tempX = this.x + playerSpeed;
 					break;
 				case "up":
+					tempY = this.y - playerSpeed;
 					break;
 				case "down":
 					break;
@@ -88,6 +105,24 @@ package GameObjects {
 			} //end switch
 			
 			//check for stage edges
+			if ((tempX > 0 - (MainGame.backgroundGame.width / 2 - HFUBloxx.borderSize)) && (tempX < MainGame.backgroundGame.width))
+			{
+				
+				
+				if(directions == "left" || directions == "right"){
+					trace("Right and left");
+					this.x = tempX;
+				}else if(directions == "up"){
+					this.y = tempY;
+				}
+			
+			}
 		}
+		
+		public function doPhysic() : void{
+			forceFall  += 1;
+			//this.y += forceFall;			
+		}
+		
 	}//class end
 }

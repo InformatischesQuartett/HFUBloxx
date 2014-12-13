@@ -44,10 +44,13 @@ package
 		public static var borderSize : int;
 		
 		//variables for keyboard input
-		public var up : Boolean = false;
-		public var down : Boolean = false;
-		public var left : Boolean = false;
-		public var right : Boolean = false;
+		public static var up : Boolean = false;
+		public static var down : Boolean = false;
+		public static var left : Boolean = false;
+		public static var right : Boolean = false;
+		
+		//Array of colider references
+		public static var colliderArray : Array = new Array();
 		
 		public function HFUBloxx() {
 			//loading external data
@@ -152,6 +155,14 @@ package
 					right = false;
 					break;
 			}
+		}
+		
+		/**
+		 * 
+		 * register coliders for collision checking
+		 * */
+		public function registerCollider(_event:Event) : void{
+			colliderArray.push(_event.target); 		
 		}
 		
 	} //end class
