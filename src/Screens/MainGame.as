@@ -1,5 +1,6 @@
 package Screens {
 	
+	import GameObjects.Hat;
 	import GameObjects.Player;
 	
 	import flash.events.KeyboardEvent;
@@ -24,6 +25,8 @@ package Screens {
 		private var playerTwo : Player;
 		
 		public static var backgroundGame : Image;
+		
+		public static var testHat : Hat;
 
 		public function MainGame() {
 			//call super class' constructor
@@ -51,7 +54,10 @@ package Screens {
 			this.addChild(backgroundGame);
 			
 			//spawns player and adds him to main stage
+			testHat = new Hat();
+			this.addChild(testHat);
 			this.addChild(spawnPlayers());
+			
 		
 		}//end constructor
 		

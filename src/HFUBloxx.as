@@ -4,17 +4,15 @@ package
 	//import flash.display.MovieClip;
 	//import engine libs
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.KeyboardEvent;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	import flash.system.Capabilities;
+	import flash.ui.Keyboard;
 	
 	import starling.core.Starling;
-	
-	import flash.net.URLRequest;
-	import flash.net.URLLoader;
-	import flash.events.IOErrorEvent;
-	
-	import flash.events.KeyboardEvent;
-	import flash.events.Event;
-	import flash.ui.Keyboard;
 	
 	//settings
 	[SWF(frameRate="60", width="800", height="600")]
@@ -123,6 +121,7 @@ package
 		 **/
 		public function onKeysDown(_event : KeyboardEvent) : void {
 			switch(_event.keyCode) {
+				case Keyboard.UP:
 				case Keyboard.SPACE:
 					trace("I am jumping");
 					up = true;
@@ -143,6 +142,7 @@ package
 		 **/
 		public function onKeysUp(_event : KeyboardEvent) : void {
 			switch(_event.keyCode) {
+				case Keyboard.UP:
 				case Keyboard.SPACE:
 					up = false;
 					break;
@@ -161,8 +161,9 @@ package
 		 * 
 		 * register coliders for collision checking
 		 * */
-		public function registerCollider(_event:Event) : void{
-			colliderArray.push(_event.target); 		
+		public static function registerCollider(aObject:Object) : void{
+			colliderArray.push(aObject); 	
+			trace(aObject);
 		}
 		
 	} //end class
