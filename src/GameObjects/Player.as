@@ -84,6 +84,7 @@ package GameObjects {
 			for each (var oCollider:Object in HFUBloxx.colliderArray){
 				if (this.getBounds(this.parent).intersects(oCollider.getBounds(MainGame.testHat.parent)))
 				{
+					trace("collision");
 					//Starling.current.nativeStage.removeChild(oCollider);
 				}
 			}
