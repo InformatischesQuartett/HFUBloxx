@@ -82,15 +82,16 @@ package GameObjects {
 		 **/ 
 		public function checkCollision() : void {
 			//MainGame.testHat.setRemoveMe();
-			for each (var oCollider : Object in HFUBloxx.colliderArray){
-				trace(this.getBounds(this.parent).intersects(oCollider.getBounds(MainGame.testHat.parent)));
-//				if (this.getBounds(this.parent).intersects(oCollider.getBounds(MainGame.testHat.parent)))
-//				{
-//					trace("collision");
-//					
-//					//Starling.current.nativeStage.removeChild(oCollider);
-//					//Starling.current.nativeStage.removeChild(oCollider);
-//				}
+			for each (var oCollider in HFUBloxx.colliderArray){
+				
+				if (this.getBounds(this.parent).intersects(oCollider.getBounds(MainGame.testHat.parent)))
+				{
+					//trace("collision");
+					oCollider.setRemoveMe(true);
+					trace(oCollider.removeMe);
+					//Starling.current.nativeStage.removeChild(oCollider);
+					//Starling.current.nativeStage.removeChild(oCollider);
+				}
 			}
 		}
 		
