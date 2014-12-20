@@ -3,6 +3,7 @@ package Screens {
 	import GameObjects.Hat;
 	import GameObjects.Player;
 	
+	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
@@ -11,6 +12,7 @@ package Screens {
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.text.TextField;
+	
 	
 	public class MainGame extends Sprite {
 		
@@ -31,6 +33,8 @@ package Screens {
 		public function MainGame() {
 			//call super class' constructor
 			super();
+			
+			Starling.current.nativeStage.addEventListener(Event.ENTER_FRAME, update);
 			
 			trace("Starting MainGame");
 			
@@ -80,5 +84,26 @@ package Screens {
 			playerOne = new Player("avatar_Yellow");
 			return playerOne;
 		}
+		
+		public function update(_event : Event) : void{
+			checkColliderState();
+		}
+		
+		public function checkColliderState() : void{
+			// control variable for Array Elements
+			var counter : int = 0;
+			
+			for each (var aCollider in HFUBloxx.colliderArray){
+				if(aCollider.removeMe == true){
+					this.removeChild(aCollider);
+					trace("remove Me");
+					
+					//remove the counter th Element from the Array (the 1 indicates: only 1 Element)
+					HFUBloxx.colliderArray.splice(counter, 1);
+				}
+				counter++;
+			}
+		}
+		
 	}
 }
