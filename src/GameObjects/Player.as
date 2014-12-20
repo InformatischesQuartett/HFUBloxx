@@ -89,8 +89,6 @@ package GameObjects {
 					//trace("collision");
 					oCollider.setRemoveMe(true);
 					
-					//Starling.current.nativeStage.removeChild(oCollider);
-					//Starling.current.nativeStage.removeChild(oCollider);
 				}
 			}
 		}
@@ -120,8 +118,6 @@ package GameObjects {
 				default:
 					break;
 			} //end switch
-			
-			trace(tempX);
 			
 			//check for stage edges
 			
