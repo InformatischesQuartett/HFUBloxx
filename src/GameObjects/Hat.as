@@ -29,6 +29,9 @@ package GameObjects
 			HFUBloxx.registerCollider(this);
 		}
 		
+		/**
+		 * sets the state of the hat item
+		 **/ 
 		public function setRemoveMe  (hatDeleteState : Boolean) : void {
 			removeMe = hatDeleteState;
 		}
