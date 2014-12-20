@@ -10,14 +10,15 @@ package GameObjects
 	public class Hat extends Sprite
 	{
 		private var hatImage : Image;
-		public static var removeMe : Boolean = false;
+		public var removeMe : Boolean;
 		
 		
 		/**
 		 * Constructor Hat
 		 **/ 
 		public function Hat()
-		{
+		{	
+			removeMe = false;
 			hatImage = new Image(Assets.getTexture("hat_Green"));
 			hatImage.height = HFUBloxx.playerSize *  0.7; // 70%
 			hatImage.width = HFUBloxx.playerSize * 1.2;
@@ -26,6 +27,10 @@ package GameObjects
 			hatImage.y = (HFUBloxx.GameHeight - hatImage.height)- HFUBloxx.borderSize;
 			this.addChild(hatImage);
 			HFUBloxx.registerCollider(this);
+		}
+		
+		public function setRemoveMe  () : void {
+			removeMe = !removeMe;
 		}
 	}
 }

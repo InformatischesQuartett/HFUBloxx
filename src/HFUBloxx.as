@@ -1,6 +1,5 @@
 package
 {
-	
 	//import flash.display.MovieClip;
 	//import engine libs
 	import flash.display.Sprite;

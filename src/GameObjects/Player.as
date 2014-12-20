@@ -81,12 +81,16 @@ package GameObjects {
 		 * Checks if avatar hits objects
 		 **/ 
 		public function checkCollision() : void {
-			for each (var oCollider:Object in HFUBloxx.colliderArray){
-				if (this.getBounds(this.parent).intersects(oCollider.getBounds(MainGame.testHat.parent)))
-				{
-					trace("collision");
-					//Starling.current.nativeStage.removeChild(oCollider);
-				}
+			//MainGame.testHat.setRemoveMe();
+			for each (var oCollider : Object in HFUBloxx.colliderArray){
+				trace(this.getBounds(this.parent).intersects(oCollider.getBounds(MainGame.testHat.parent)));
+//				if (this.getBounds(this.parent).intersects(oCollider.getBounds(MainGame.testHat.parent)))
+//				{
+//					trace("collision");
+//					
+//					//Starling.current.nativeStage.removeChild(oCollider);
+//					//Starling.current.nativeStage.removeChild(oCollider);
+//				}
 			}
 		}
 		
