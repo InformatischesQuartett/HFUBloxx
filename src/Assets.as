@@ -47,6 +47,26 @@
 		
 		//Spieliguren
 		
+		[Embed(source="../assets/textures/avatar_gre.ai")]
+		public static const avatar_Green:Class;
+		
+		[Embed(source="../assets/textures/avatar_red.ai")]
+		public static const avatar_Red:Class;
+		
+		[Embed(source="../assets/textures/avatar_red2.ai")]
+		public static const avatar_Red:Class;
+		
+		[Embed(source="../assets/textures/avatar_blu.ai")]
+		public static const avatar_Yellow:Class;
+		
+		[Embed(source="../assets/textures/avatar_yel.ai")]
+		public static const avatar_Lilac:Class;
+		*/
+		
+		/*
+		
+		ALT als PNG
+		
 		[Embed(source="../assets/textures/avatar_gre.png")]
 		public static const avatar_Green:Class;
 		
@@ -58,7 +78,7 @@
 		
 		[Embed(source="../assets/textures/avatar_lil.png")]
 		public static const avatar_Lilac:Class;
-		
+		*/
 		
 		
 		// BloXX
