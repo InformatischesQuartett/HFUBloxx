@@ -99,8 +99,11 @@ package GameObjects {
 		 * Handles the Player's Movement
 		 **/
 		public function playerMove(directions : String) : void {
+			
 			var tempX : int;
 			var tempY : int;
+			
+			
 			switch (directions) {
 				case "left":
 					tempX = this.x - walkSpeed;
@@ -118,14 +121,23 @@ package GameObjects {
 					break;
 			} //end switch
 			
+			trace(tempX);
+			
 			//check for stage edges
-			if ((tempX > 0 - (MainGame.backgroundGame.width / 2 - HFUBloxx.borderSize)) && (tempX < MainGame.backgroundGame.width))
+			
+			if (tempX > (MainGame.backgroundGame.width/2 ) - (this.width/2) -10)//&& (tempX < MainGame.backgroundGame.width)))
 			{
-				if(directions == "left" || directions == "right"){
+				tempX = MainGame.backgroundGame.width/2 - (this.width/2) -11;
+			}
+			if (tempX < -(MainGame.backgroundGame.width/2) + (this.width/2) + 10 ) 
+			{
+				tempX = -(MainGame.backgroundGame.width/2) + (this.width/2) + 11;
+			}
+			
+			if(directions == "left" || directions == "right"){
 					this.x = tempX;
-				}else if(directions == "up"){
+			}else if(directions == "up"){
 					this.y = tempY;
-				}
 			}
 		}
 		
