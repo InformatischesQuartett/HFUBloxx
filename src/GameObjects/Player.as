@@ -31,6 +31,9 @@ package GameObjects {
 		private var forceFall : int = 0;
 		private var fallSpeed : int  = 0.5;
 		
+		private var gameBorderRight;
+		private var gameBorderLeft;
+		
 		/**
 		 * Constructor
 		 **/
@@ -52,6 +55,10 @@ package GameObjects {
 			//adds Image to this stage
 			this.addChild(playerImage);
 			
+			
+			gameBorderRight = (MainGame.backgroundGame.width/2 ) - (this.width/2) -10;
+			gameBorderLeft = -(MainGame.backgroundGame.width/2) + (this.width/2) + 10; 
+				
 			trace("player spawned " + playerImage.x + playerImage);
 		}//constructor end
 		
@@ -121,13 +128,13 @@ package GameObjects {
 			
 			//check for stage edges
 			
-			if (tempX > (MainGame.backgroundGame.width/2 ) - (this.width/2) -10)//&& (tempX < MainGame.backgroundGame.width)))
+			if (tempX > gameBorderRight)//&& (tempX < MainGame.backgroundGame.width)))
 			{
-				tempX = MainGame.backgroundGame.width/2 - (this.width/2) -11;
+				tempX = gameBorderRight - 1;
 			}
-			if (tempX < -(MainGame.backgroundGame.width/2) + (this.width/2) + 10 ) 
+			if (tempX < gameBorderLeft)
 			{
-				tempX = -(MainGame.backgroundGame.width/2) + (this.width/2) + 11;
+				tempX = gameBorderLeft +1;
 			}
 			
 			if(directions == "left" || directions == "right"){
