@@ -29,8 +29,9 @@ package GameObjects
 			HFUBloxx.registerCollider(this);
 		}
 		
-		public function setRemoveMe  () : void {
-			removeMe = !removeMe;
+		public function setRemoveMe  (hatDeleteState : Boolean) : void {
+			removeMe = hatDeleteState;
 		}
+		
 	}
 }
