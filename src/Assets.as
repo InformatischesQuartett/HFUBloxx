@@ -62,7 +62,7 @@
 		//[Embed(source="../assets/textures/avatar_yel.ai")]
 		//public static const avatar_Lilac:Class;
 		
-		[Embed(source="../assets/textures/avatar_yel.ai")]
+		[Embed(source="../assets/textures/avatar_yel.svg")]
 		public static const avatar_Lilac:Class;
 		
 		/*
