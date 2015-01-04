@@ -1,11 +1,7 @@
 package GameObjects
 {
-	import flash.display.Sprite;
-	
-	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
-	import starling.text.TextField;
 
 	public class Hat extends Sprite
 	{

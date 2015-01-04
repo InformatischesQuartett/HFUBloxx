@@ -1,14 +1,13 @@
 ﻿package
 {
-	import flash.display.Bitmap;
 	import flash.utils.Dictionary;
-	
 	import starling.textures.Texture;
-
+	
 	public class Assets
 	{
-		//Configurational Data from external Data file
+		// Configurational Data from external Data file
 		public var xmlContent : XML;
+		
 		
 		// Game
 		
@@ -41,33 +40,9 @@
 		
 		[Embed(source="../assets/textures/button_time.png")]
 		public static const time_Button:Class;
+			
 		
-		
-		
-		
-		//Spieliguren
-		
-		//[Embed(source="../assets/textures/avatar_gre.ai")]
-		//public static const avatar_Green:Class;
-		
-		//[Embed(source="../assets/textures/avatar_red.ai")]
-		//public static const avatar_Red:Class;
-		
-		//[Embed(source="../assets/textures/avatar_red2.ai")]
-		//public static const avatar_Red:Class;
-		
-		//[Embed(source="../assets/textures/avatar_blu.ai")]
-		//public static const avatar_Yellow:Class;
-		
-		//[Embed(source="../assets/textures/avatar_yel.ai")]
-		//public static const avatar_Lilac:Class;
-		
-		[Embed(source="../assets/textures/avatar_yel.svg")]
-		public static const avatar_Lilac:Class;
-		
-		/*
-		
-		ALT als PNG
+		// Spieliguren
 		
 		[Embed(source="../assets/textures/avatar_gre.png")]
 		public static const avatar_Green:Class;
@@ -80,11 +55,10 @@
 		
 		[Embed(source="../assets/textures/avatar_lil.png")]
 		public static const avatar_Lilac:Class;
-		*/
 		
 		
 		// BloXX
-		
+			
 		[Embed(source="../assets/textures/bloxx_green1.png")]
 		public static const bloxx_Green1:Class;
 		
@@ -141,35 +115,7 @@
 		
 		[Embed(source="../assets/textures/hat_yellow.png")]
 		public static const hat_Yellow:Class;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+				
 		
 		/*
 		[Embed(source="../assets/images/logo.png")]
@@ -214,17 +160,18 @@
 		
 		[Embed(source="../assets/images/header.png")]
 		public static const header:Class;
-		
 		*/
 		
 		private static var gameTextures:Dictionary = new Dictionary();
 		
-		public static function getTexture(name:String):Texture
+		public static function getTexture(name:String, width:int=0, height:int=0):Texture
 		{
 			if(gameTextures[name] == undefined)
 			{
-				var bitmap:Bitmap = new Assets[name]();
-				gameTextures[name] = Texture.fromBitmap(bitmap);
+				if (Assets[name] != undefined)
+					gameTextures[name] = Texture.fromEmbeddedAsset(Assets[name]);
+				else
+					throw new Error("Could not find variable '" + name + "'. Has it been declared?"); 
 			}
 			
 			return gameTextures[name];

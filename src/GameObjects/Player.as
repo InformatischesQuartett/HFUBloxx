@@ -2,18 +2,13 @@ package GameObjects {
 	
 	//import HFUBloxx;
 	
-	import Screens.MainGame;
-	
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
-	import flashx.textLayout.formats.BackgroundColor;
-	import flashx.textLayout.formats.Float;
+	import Screens.MainGame;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
-	import starling.text.TextField;
 	
 	
 	/**
@@ -29,7 +24,7 @@ package GameObjects {
 		
 		//Gravity
 		private var forceFall : int = 0;
-		private var fallSpeed : int  = 0.5;
+		private var fallSpeed : Number = 0.5;
 		
 		private var gameBorderRight;
 		private var gameBorderLeft;
