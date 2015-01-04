@@ -9,6 +9,7 @@ package GameObjects {
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
+	import starling.textures.TextureSmoothing;
 	
 	
 	/**
@@ -44,6 +45,7 @@ package GameObjects {
 			playerImage =  new Image(Assets.getTexture(color));
 			playerImage.width = HFUBloxx.playerSize;
 			playerImage.height = HFUBloxx.playerSize;
+			playerImage.smoothing = TextureSmoothing.TRILINEAR;
 			
 			//position
 			playerImage.x = (HFUBloxx.GameWidth/4) - (playerImage.width/2);

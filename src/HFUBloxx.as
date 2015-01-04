@@ -66,7 +66,7 @@ package
 			
 			//start game engine
 			myStarling = new Starling(BloxxGame, stage);
-			myStarling.antiAliasing = 2;
+			myStarling.antiAliasing = 16;
 			myStarling.start();
 			
 			//adding the event listeners
@@ -126,7 +126,6 @@ package
 			switch(_event.keyCode) {
 				case Keyboard.UP:
 				case Keyboard.SPACE:
-					trace("I am jumping");
 					up = true;
 					break;
 				case Keyboard.A:
