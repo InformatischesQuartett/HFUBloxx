@@ -46,6 +46,8 @@ package
 		public static var left : Boolean = false;
 		public static var right : Boolean = false;
 		
+		private var keysDown:Array = new Array(256);
+		
 		//Array of colider references
 		public static var colliderArray : Array = new Array();
 		
@@ -119,6 +121,8 @@ package
 		 * Event handler when keys are pressed down
 		 **/
 		public function onKeysDown(_event : KeyboardEvent) : void {
+			keysDown[_event.keyCode] = true;
+			
 			switch(_event.keyCode) {
 				case Keyboard.UP:
 				case Keyboard.SPACE:
@@ -128,10 +132,12 @@ package
 				case Keyboard.A:
 				case Keyboard.LEFT:
 					left = true;
+					right = false;
 					break;
 				case Keyboard.D:
 				case Keyboard.RIGHT:
 					right = true;
+					left = false;
 					break;
 			}
 		}
@@ -140,6 +146,8 @@ package
 		 * Event handler when keys are released
 		 **/
 		public function onKeysUp(_event : KeyboardEvent) : void {
+			keysDown[_event.keyCode] = false;
+			
 			switch(_event.keyCode) {
 				case Keyboard.UP:
 				case Keyboard.SPACE:
@@ -148,10 +156,12 @@ package
 				case Keyboard.A:
 				case Keyboard.LEFT:
 					left = false;
+					right = keysDown[Keyboard.D] || keysDown[Keyboard.RIGHT];
 					break;
 				case Keyboard.D:
 				case Keyboard.RIGHT:
 					right = false;
+					left = keysDown[Keyboard.A] || keysDown[Keyboard.LEFT];
 					break;
 			}
 		}

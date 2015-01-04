@@ -19,15 +19,17 @@ package GameObjects {
 		//walking speed --> set in an external xml file
 		private var walkSpeed : int = 4; // = int(HFUBloxx.xmlContent.Player.playerSpeed.@ps);
 		private var jumpSpeed : int = 10;
+		private var isJumping : Boolean = false;
+		
 		//image
 		private var playerImage : Image;
 		
 		//Gravity
-		private var forceFall : int = 0;
+		private var forceFall : Number = 0;
 		private var fallSpeed : Number = 0.5;
 		
-		private var gameBorderRight;
-		private var gameBorderLeft;
+		private var gameBorderRight:Number;
+		private var gameBorderLeft:Number;
 		
 		/**
 		 * Constructor
@@ -50,10 +52,9 @@ package GameObjects {
 			//adds Image to this stage
 			this.addChild(playerImage);
 			
-			
 			gameBorderRight = (MainGame.backgroundGame.width/2 ) - (this.width/2) -10;
 			gameBorderLeft = -(MainGame.backgroundGame.width/2) + (this.width/2) + 10; 
-				
+			
 			trace("player spawned " + playerImage.x + playerImage);
 		}//constructor end
 		
@@ -64,18 +65,16 @@ package GameObjects {
 			//check for collision
 			checkCollision();
 			doPhysic();
-			
-			var test : Boolean = true;
-			
-			
+
 			//movement			
-			if (HFUBloxx.left) {
+			if (HFUBloxx.left)
 				playerMove("left");
-			}else if(HFUBloxx.right){
+			
+			if (HFUBloxx.right)
 				playerMove("right");
-			}else if(HFUBloxx.up){
+			
+			if (HFUBloxx.up)
 				playerMove("up");
-			}
 			
 		}//end update method
 		
@@ -84,13 +83,11 @@ package GameObjects {
 		 **/ 
 		public function checkCollision() : void {
 			//MainGame.testHat.setRemoveMe();
-			for each (var oCollider : Object in HFUBloxx.colliderArray){
-				
+			for each (var oCollider : Object in HFUBloxx.colliderArray) {
 				if (this.getBounds(this.parent).intersects(oCollider.getBounds(MainGame.testHat.parent)))
 				{
 					//trace("collision");
 					oCollider.setRemoveMe(true);
-					
 				}
 			}
 		}
@@ -99,55 +96,53 @@ package GameObjects {
 		 * Handles the Player's Movement
 		 **/
 		public function playerMove(directions : String) : void {
-			
-			var tempX : int;
-			var tempY : int;
-			
+			var tempX: int;
 			
 			switch (directions) {
 				case "left":
 					tempX = this.x - walkSpeed;
-					//trace("");
 					break;
+				
 				case "right":
 					tempX = this.x + walkSpeed;
 					break;
+				
 				case "up":
-					tempY = this.y - jumpSpeed;
+					if (!isJumping) {
+						forceFall = -jumpSpeed;
+						isJumping = true;
+					}
 					break;
+				
 				case "down":
 					break;
+				
 				default:
 					break;
 			} //end switch
 			
 			//check for stage edges
-			
-			if (tempX > gameBorderRight)//&& (tempX < MainGame.backgroundGame.width)))
-			{
+			if (tempX > gameBorderRight)
 				tempX = gameBorderRight - 1;
-			}
-			if (tempX < gameBorderLeft)
-			{
-				tempX = gameBorderLeft +1;
-			}
 			
-			if(directions == "left" || directions == "right"){
-					this.x = tempX;
-			}else if(directions == "up"){
-					this.y = tempY;
-			}
+			if (tempX < gameBorderLeft)
+				tempX = gameBorderLeft + 1;
+			
+			if (directions == "left" || directions == "right")
+				this.x = tempX;
 		}
 		
 		public function doPhysic() : void{			
-			forceFall  += 1;
-			if(this.y < 0){
-				this.y += forceFall;			
-			}else{
+			forceFall += fallSpeed;
+
+			this.y += forceFall;
+			this.y = Math.min(0, this.y);
+			
+			if (this.y == 0) {
+				isJumping = false;
 				forceFall = 0;
-				this.y -= 1;
 			}
 		}
 		
-	}//class end
+	} //class end
 }
