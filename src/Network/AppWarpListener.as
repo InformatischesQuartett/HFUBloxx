@@ -15,25 +15,25 @@ package Network
 	
 	public class AppWarpListener implements ConnectionRequestListener, RoomRequestListener, NotificationListener
 	{
-		private var _owner:NetworkHandler;
+		private var netHandler:NetworkHandler;
 		
-		public function AppWarpListener(owner:NetworkHandler)
+		public function AppWarpListener(net:NetworkHandler)
 		{
-			_owner = owner;
+			netHandler = net;
 		}
 
 		public function onConnectDone(res:int, reason:int):void
 		{
 			if (res == ResultCode.success){
-				WarpClient.getInstance().joinRoom(_owner.roomID);
-				WarpClient.getInstance().subscribeRoom(_owner.roomID);
+				WarpClient.getInstance().joinRoom(netHandler.roomID);
+				WarpClient.getInstance().subscribeRoom(netHandler.roomID);
 			}
 			else if (res == ResultCode.auth_error)
-				_owner.updateStatus("Auth Error");
+				netHandler.updateStatus("Auth Error");
 			else if (res == ResultCode.connection_error)
-				_owner.updateStatus("Network Error. Check your internet connectivity and retry.");
+				netHandler.updateStatus("Network Error. Check your internet connectivity and retry.");
 			else
-				_owner.updateStatus("Unknown Error");
+				netHandler.updateStatus("Unknown Error");
 		}
 		
 		public function onDisConnectDone(res:int):void
@@ -59,9 +59,9 @@ package Network
 		public function onJoinRoomDone(event:Room):void
 		{
 			if (event.result == ResultCode.success)
-				_owner.updateStatus("Started! Use up/down arrows and click to shoot.");
+				netHandler.updateStatus("Started! Use up/down arrows and click to shoot.");
 			else
-				_owner.updateStatus("Room join failed. Verify your room id.");
+				netHandler.updateStatus("Room join failed. Verify your room id.");
 		}
 		
 		public function onLeaveRoomDone(event:Room):void
@@ -141,19 +141,12 @@ package Network
 		
 		public function onChatReceived(event:Chat):void
 		{
-			/*
-			if(event.sender != _owner.localUsername){
-				var xyArray:Array = event.chat.split(",");
-				var x:int = parseInt(xyArray[1]);
-				var y:int = parseInt(xyArray[2]);
+			if(event.sender != netHandler.localUsername){
+				var inArray:Array = event.chat.split(",");
 				
-				if(xyArray[0] == "player")
-					_owner.moveRemotePlayer(x, y);
-				else if(xyArray[0] == "projectile")
-					_owner.moveRemoteProjectile(x, y);
-				}
+				if (inArray[0] == "msg")
+					netHandler.updateStatus(" new Message (" + inArray[1] + ")");
 			}
-			*/
 		}
 		
 		public function onUpdatePeersReceived(update:ByteArray, fromUDP:Boolean):void

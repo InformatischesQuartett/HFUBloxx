@@ -95,10 +95,11 @@ package
 		
 		private function setRootHandler(): void
 		{
-			(mStarling.root as MainMenu).setHandler(this, netHandler);
+			curScreen = (mStarling.root as MainMenu);
+			curScreen.setHandler(this, netHandler);
 		}
 		
-		public function loadScreen(curScreen:BloxxScreen, screenCl:Class): void
+		public function loadScreen(screenCl:Class): void
 		{
 			// delete current screen
 			mStarling.stage.removeChild(curScreen);

@@ -56,6 +56,11 @@ package Network
 			this.addChild(netStatus);
 		}
 		
+		public function sendMessage(type:String, message:String):void
+		{
+			WarpClient.getInstance().sendChat(type + "," + message);
+		}
+		
 		public function updateStatus(message:String):void
 		{   
 			netStatus.text = "Network: " + message;

@@ -27,7 +27,7 @@ package Screens
 			scoreButton.x = (playButton.x + playButton.width) + 10;
 			scoreButton.y = (playButton.y);
 			this.addChild(scoreButton);
-			
+			scoreButton.addEventListener(Event.TRIGGERED, userScore_onClick);
 			
 			/*
 			var logo:Image = new Image(Assets.getTextue("logo"));
@@ -61,7 +61,7 @@ package Screens
 		 **/
 		public function plyBtn_onClick(event:Event):void
 		{
-			gameHandler.loadScreen(this, MainGame);				
+			gameHandler.loadScreen(MainGame);				
 		}
 		
 		public function userScore_onClick(event:Event):void
@@ -71,6 +71,8 @@ package Screens
 			this.parent.addChild(screen);
 			this.removeFromParent(true);
 			*/
+			
+			netHandler.sendMessage("msg", "this is a test");
 		}
 	}
 }
