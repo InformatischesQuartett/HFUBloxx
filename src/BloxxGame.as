@@ -1,21 +1,16 @@
 ﻿package {
 	
-	import Screens.Menu;
-	
+	import Screens.MainMenu;
 	import starling.display.Sprite;
-	import starling.core.Starling;
-	
+
 	public class BloxxGame extends Sprite {
 
 		public function BloxxGame() {
-			//calls constructor of super class
+			// calls constructor of super class
 			super();
 			
-			var myMenu : Sprite = new Menu();
-			this.addChild(myMenu);
-			
+			var mainMenu : Sprite = new MainMenu();
+			this.addChild(mainMenu);
 		}
-
 	}
-	
 }

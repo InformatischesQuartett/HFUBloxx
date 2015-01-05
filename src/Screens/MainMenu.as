@@ -5,11 +5,9 @@ package Screens
 	import starling.display.Sprite;
 	import starling.events.Event;
 	
-	public class Menu extends Sprite
-	{
-		//public var himanshu:App42LeaderBoard;	
-		
-		public function Menu()
+	public class MainMenu extends Sprite
+	{	
+		public function MainMenu()
 		{
 			super();
 

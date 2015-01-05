@@ -44,7 +44,7 @@ package Screens
 		
 		public function menuBtn_onClick(event:Event):void
 		{
-			var screen:Sprite = new Menu;
+			var screen:Sprite = new MainMenu;
 			this.parent.addChild(screen);
 			this.removeFromParent(true);
 		}
