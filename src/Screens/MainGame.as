@@ -7,9 +7,8 @@ package Screens {
 	
 	import starling.core.Starling;
 	import starling.display.Image;
-	import starling.display.Sprite;
 	
-	public class MainGame extends Sprite {
+	public class MainGame extends BloxxScreen {
 		
 		/*Game Variables */
 		private var colorBloxxArray : Array;

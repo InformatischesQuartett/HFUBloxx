@@ -43,6 +43,7 @@ package Network
 			WarpClient.getInstance().setNotificationListener(netListener);
 			
 			localUsername = Math.random().toString();
+			
 			WarpClient.getInstance().connect(localUsername);
 			
 			// network information

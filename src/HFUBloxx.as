@@ -13,9 +13,11 @@ package
 	
 	import Network.NetworkHandler;
 	
+	import Screens.MainGame;
 	import Screens.MainMenu;
 	
 	import starling.core.Starling;
+	import starling.events.Event;
 	
 	//settings
 	[SWF(frameRate="60", width="800", height="600")]
@@ -32,8 +34,10 @@ package
 	public class HFUBloxx extends Sprite {
 		
 		//engine and network
-		private var myStarling : Starling;
-		private var netManager : NetworkHandler;
+		private var mStarling : Starling;
+		private var netHandler : NetworkHandler;
+		
+		private var curScreen : BloxxScreen;
 		
 		//stores the external data
 		public var xmlContent : XML;
@@ -70,20 +74,45 @@ package
 			GameHeight = 600; //Capabilities.screenResolutionY;
 			
 			//start game engine
-			myStarling = new Starling(MainMenu, stage);
-			myStarling.antiAliasing = 16;
-			myStarling.start();
-						
+			mStarling = new Starling(MainMenu, stage);
+			
+			mStarling.addEventListener(starling.events.Event.ROOT_CREATED, function():void
+			{
+				setRootHandler();
+			});
+			
+			mStarling.start();
+
 			//adding the event listeners
 			Starling.current.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeysDown);
 			Starling.current.nativeStage.addEventListener(KeyboardEvent.KEY_UP, onKeysUp);
 
 			//start network manager
-			netManager = new NetworkHandler();
-			myStarling.stage.addChild(netManager);
-				
+			netHandler = new NetworkHandler();
+			mStarling.stage.addChild(netHandler);
 		}//end constructor
 		
+		
+		private function setRootHandler(): void
+		{
+			(mStarling.root as MainMenu).setHandler(this, netHandler);
+		}
+		
+		public function loadScreen(curScreen:BloxxScreen, screenCl:Class): void
+		{
+			// delete current screen
+			mStarling.stage.removeChild(curScreen);
+			curScreen = null;
+			
+			// create new screen
+			var screen:BloxxScreen = new screenCl();
+			screen.setHandler(this, netHandler);
+						
+			mStarling.stage.addChild(screen);
+			mStarling.stage.setChildIndex(screen, 0);
+			
+			curScreen = screen;
+		}
 		
 		/**
 		 * ------------------------------------------------------------
@@ -96,7 +125,7 @@ package
 		 **/
 		public function loadData() : void {
 			ldr = new URLLoader();
-			ldr.addEventListener(Event.COMPLETE, loadComplete);
+			ldr.addEventListener(flash.events.Event.COMPLETE, loadComplete);
 			ldr.addEventListener(IOErrorEvent.IO_ERROR, loadError);
 			
 			ldr.load(new URLRequest("./externalData.xml"));
@@ -105,9 +134,9 @@ package
 		/**
 		 * When loading complete, store data in variable and remove listeners
 		 **/
-		public function loadComplete(_event : Event) : void {
+		public function loadComplete(_event : flash.events.Event) : void {
 			xmlContent = new XML(ldr.data);
-			ldr.removeEventListener(Event.COMPLETE, loadComplete);
+			ldr.removeEventListener(flash.events.Event.COMPLETE, loadComplete);
 			ldr.removeEventListener(IOErrorEvent.IO_ERROR, loadError);
 			trace("Loading from external data completed");
 		}

@@ -2,10 +2,9 @@ package Screens
 {
 	import starling.display.Button;
 	import starling.display.Image;
-	import starling.display.Sprite;
 	import starling.events.Event;
 	
-	public class MainMenu extends Sprite
+	public class MainMenu extends BloxxScreen
 	{	
 		public function MainMenu()
 		{
@@ -55,16 +54,14 @@ package Screens
 			this.addChild(msg);
 			*/
 		}
-		
+			
 		/**
 		 * Listener Event for clicking the Play Button
 		 * By clicking the game will start.
 		 **/
 		public function plyBtn_onClick(event:Event):void
 		{
-			var screen : Sprite = new MainGame();
-			this.parent.addChild(screen);
-			this.removeFromParent(true);
+			gameHandler.loadScreen(this, MainGame);				
 		}
 		
 		public function userScore_onClick(event:Event):void
