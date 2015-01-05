@@ -11,6 +11,10 @@ package
 	import flash.system.Capabilities;
 	import flash.ui.Keyboard;
 	
+	import Network.NetworkHandler;
+	
+	import Screens.MainMenu;
+	
 	import starling.core.Starling;
 	
 	//settings
@@ -27,8 +31,9 @@ package
 	 **/
 	public class HFUBloxx extends Sprite {
 		
-		//engine
+		//engine and network
 		private var myStarling : Starling;
+		private var netManager : NetworkHandler;
 		
 		//stores the external data
 		public var xmlContent : XML;
@@ -51,7 +56,7 @@ package
 		//Array of colider references
 		public static var colliderArray : Array = new Array();
 		
-		public function HFUBloxx() {
+		public function HFUBloxx() {		
 			//loading external data
 			loadData();
 			
@@ -65,13 +70,17 @@ package
 			GameHeight = 600; //Capabilities.screenResolutionY;
 			
 			//start game engine
-			myStarling = new Starling(BloxxGame, stage);
+			myStarling = new Starling(MainMenu, stage);
 			myStarling.antiAliasing = 16;
 			myStarling.start();
-			
+						
 			//adding the event listeners
 			Starling.current.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeysDown);
 			Starling.current.nativeStage.addEventListener(KeyboardEvent.KEY_UP, onKeysUp);
+
+			//start network manager
+			netManager = new NetworkHandler();
+			myStarling.stage.addChild(netManager);
 				
 		}//end constructor
 		
