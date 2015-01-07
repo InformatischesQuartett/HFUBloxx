@@ -6,6 +6,7 @@ package
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.KeyboardEvent;
+	import flash.geom.Rectangle;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.system.Capabilities;
@@ -16,8 +17,11 @@ package
 	import Screens.MainGame;
 	import Screens.MainMenu;
 	
+	import Webcam.CamHandler;
+	
 	import starling.core.Starling;
 	import starling.events.Event;
+	import Screens.BloxxScreen;
 	
 	//settings
 	[SWF(frameRate="60", width="800", height="600")]
@@ -35,6 +39,8 @@ package
 		
 		//engine and network
 		private var mStarling : Starling;
+		
+		private var camHandler : CamHandler;
 		private var netHandler : NetworkHandler;
 		
 		private var curScreen : BloxxScreen;
@@ -78,23 +84,36 @@ package
 			
 			mStarling.addEventListener(starling.events.Event.ROOT_CREATED, function():void
 			{
-				setRootHandler();
+				initStarling();
 			});
 			
 			mStarling.start();
-
-			//adding the event listeners
-			Starling.current.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeysDown);
-			Starling.current.nativeStage.addEventListener(KeyboardEvent.KEY_UP, onKeysUp);
-
-			//start network manager
-			netHandler = new NetworkHandler();
-			mStarling.stage.addChild(netHandler);
-		}//end constructor
+		} // end of constructor
 		
-		
-		private function setRootHandler(): void
+		private function initStarling(): void
 		{
+			// adding the event listeners
+			mStarling.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeysDown);
+			mStarling.nativeStage.addEventListener(KeyboardEvent.KEY_UP, onKeysUp);
+			
+			// init camera manager
+			camHandler = new CamHandler();
+			mStarling.stage.addChild(camHandler);
+			
+			camHandler.setLocalImage(new Rectangle(5, 30, 200, 200), false);
+			camHandler.setRemoteImage(new Rectangle(210, 30, 200, 200), false);
+
+			camHandler.attachCamera();
+			
+			camHandler.setLocalVisibility(true);
+			camHandler.setRemoteVisibility(true);
+			
+			// start network manager
+			netHandler = new NetworkHandler();
+			netHandler.setCamHandler(camHandler);
+			mStarling.stage.addChild(netHandler);
+			
+			// set root handler
 			curScreen = (mStarling.root as MainMenu);
 			curScreen.setHandler(this, netHandler);
 		}
@@ -108,11 +127,23 @@ package
 			// create new screen
 			var screen:BloxxScreen = new screenCl();
 			screen.setHandler(this, netHandler);
-						
+			
 			mStarling.stage.addChild(screen);
 			mStarling.stage.setChildIndex(screen, 0);
 			
 			curScreen = screen;
+			
+			// specific screen settings
+			switch (screenCl)
+			{
+				case MainGame:
+				{
+					camHandler.setLocalVisibility(false);
+					camHandler.setRemoteImage(new Rectangle(505, 375, 200, 200));
+					
+					break;
+				}
+			}
 		}
 		
 		/**

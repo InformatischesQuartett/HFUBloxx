@@ -71,7 +71,8 @@ package Screens
 			this.parent.addChild(screen);
 			this.removeFromParent(true);
 			*/
-			
+
+
 			netHandler.sendMessage("msg", "this is a test");
 		}
 	}

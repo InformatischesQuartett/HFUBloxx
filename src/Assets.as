@@ -117,6 +117,12 @@
 		public static const hat_Yellow:Class;
 				
 		
+		// Misc
+		
+		[Embed(source="../assets/textures/person.jpg")]
+		public static const misc_Person:Class;		
+		
+		
 		/*
 		[Embed(source="../assets/images/logo.png")]
 		public static const logo:Class;

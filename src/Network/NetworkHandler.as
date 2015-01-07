@@ -1,69 +1,156 @@
 package Network 
 {
-	import com.shephertz.appwarp.WarpClient;
-	import com.shephertz.appwarp.types.ConnectionState;
-	
-	import flash.utils.ByteArray;
+	import flash.events.NetStatusEvent;
+	import flash.events.TimerEvent;
+	import flash.net.NetConnection;
+	import flash.net.NetStream;
+	import flash.utils.Timer;
 	
 	import starling.display.Sprite;
 	import starling.text.TextField;
 	import starling.utils.Color;
 	import starling.utils.HAlign;
+	import Webcam.CamHandler;
 	
 	public class NetworkHandler extends Sprite
 	{
-		private var netListener: AppWarpListener;
+		public var netConnection:NetConnection;
+		public var netSendStream:NetStream;
+		public var netRecvStream:NetStream;
+
+		private var netConnectTimer:Timer;
+		private var netConnectLimit:Number = 5000;
+		private var netConnectTimeout:Boolean;
 		
 		private var netStatus: TextField;
 		
-		// AppWarp String Constants        
-		public var localUsername: String;
-		
-		public var roomID: String = "1843039564";
-		private var apiKey: String = "be4984d117a2f504f8b6917b127110b7eded570498b65c942eea9219f79b1fa8";
-			
-		[Embed(source="config.ini", mimeType="application/octet-stream")]
-		public static const privateKeyFile: Class;	
+		private var camHandler: CamHandler;
+  
+		public var localID: int;
 		
 		public function NetworkHandler()
 		{
-			netListener = new AppWarpListener(this);
-			
-			// read private key and connect
-			var bytes:ByteArray = new privateKeyFile();
-			var secretKey:String = bytes.readUTFBytes(bytes.length);
-
-			if (secretKey.length == 0)
-				throw Error("Config.ini is empty. Add private key.");
-			
-			WarpClient.initialize(apiKey, secretKey);
-			
-			WarpClient.getInstance().setConnectionRequestListener(netListener);
-			WarpClient.getInstance().setRoomRequestListener(netListener);
-			WarpClient.getInstance().setNotificationListener(netListener);
-			
-			localUsername = Math.random().toString();
-			
-			WarpClient.getInstance().connect(localUsername);
+			localID = int (Math.random() * 100000);
 			
 			// network information
-			netStatus = new TextField(500, 20, "Network: Connecting...", "Arial", 12, Color.WHITE);
+			netStatus = new TextField(500, 20, "--", "Arial", 12, Color.WHITE);
 			netStatus.hAlign = HAlign.LEFT;
 			
 			netStatus.x = 5;
 			netStatus.y = 5;
 			
 			this.addChild(netStatus);
+			
+			// create connection to the FMS
+			netConnection = new NetConnection();
+			
+			netConnection.client = this;
+			netConnection.addEventListener(NetStatusEvent.NET_STATUS, netConnectionStatus);
+
+			netConnectTimeout = false;
+			netConnectTimer = new Timer(netConnectLimit);
+			netConnectTimer.addEventListener(TimerEvent.TIMER, connectionTimeout);
+			
+			connectToRTMP();
+		}
+		
+		private function connectToRTMP():void {
+			updateStatus("Connecting to the RTMP server...");
+			
+			netConnection.connect("rtmfp://localhost/live");
+			netConnectTimer.start();
+		}
+		
+		private function connectionTimeout(e:TimerEvent):void {
+			netConnectTimeout = !netConnectTimeout;
+			
+			if (!netConnectTimeout)
+				connectToRTMP();
+			else
+				netConnection.close();
+		}
+		
+		// NetConnection Client //
+		
+		public function onBWDone(...rest):void
+		{ 
+			var p_bw:Number;
+			
+			if (rest.length > 0)
+				p_bw = rest[0];
+
+			if (!isNaN(p_bw))
+				trace("bandwidth = " + p_bw + " Kbps."); 
+		} 
+				
+		private function netConnectionStatus(event:NetStatusEvent):void
+		{
+			updateStatus(event.info.code + " (NetConnection)");
+			
+			switch(event.info.code)
+			{
+				case "NetConnection.Connect.Success":
+				{
+					netConnectTimer.stop();
+					
+					// open sending stream
+					netSendStream = new NetStream(netConnection);
+					netSendStream.addEventListener(NetStatusEvent.NET_STATUS, netStreamStatus);
+
+					netSendStream.client = this;
+					netSendStream.publish("livestream");
+					netSendStream.videoSampleAccess = true;
+					camHandler.sendToStream(netSendStream);
+					
+					// open receiving stream
+					netRecvStream = new NetStream(netConnection);
+					netRecvStream.client = this;					
+					netRecvStream.checkPolicyFile = true;
+				    netRecvStream.play("livestream");
+					
+					camHandler.recvFromStream(netRecvStream);
+										
+					break;
+				}
+					
+				case "NetConnection.Connect.Closed":
+				{
+					if (netConnectTimeout) {
+						var secs:int = int (netConnectLimit/1000);
+						updateStatus("Timeout. Reconnecting in " + secs + " seconds...");
+					} else
+						updateStatus("Connection to the RTMP server has been closed.");
+					
+					break;
+				}
+			}
+		}
+		
+		// NetStream Client //
+		
+		private function netStreamStatus(event:NetStatusEvent):void
+		{
+			updateStatus(event.info.code + " (NetStream)");
+		}
+
+		public function receiveSomeData(str:Object):void
+		{
+			trace("Incoming: " + str);
 		}
 		
 		public function sendMessage(type:String, message:String):void
 		{
-			WarpClient.getInstance().sendChat(type + "," + message);
+			netSendStream.send("receiveSomeData", "Hallo :-)");
 		}
-		
+						
 		public function updateStatus(message:String):void
 		{   
 			netStatus.text = "Network: " + message;
+		}
+		
+		public function setCamHandler(handler:CamHandler):void
+		{
+			camHandler = handler;
 		}
 	}
 }

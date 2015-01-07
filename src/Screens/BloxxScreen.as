@@ -1,4 +1,4 @@
-package
+package Screens
 {
 	import Network.NetworkHandler;
 	
