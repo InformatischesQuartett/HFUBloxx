@@ -1,16 +1,20 @@
 package Network 
 {
+	import flash.events.Event;
+	import flash.events.NetDataEvent;
 	import flash.events.NetStatusEvent;
+	import flash.events.StatusEvent;
 	import flash.events.TimerEvent;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
 	import flash.utils.Timer;
 	
+	import Webcam.CamHandler;
+	
 	import starling.display.Sprite;
 	import starling.text.TextField;
 	import starling.utils.Color;
 	import starling.utils.HAlign;
-	import Webcam.CamHandler;
 	
 	public class NetworkHandler extends Sprite
 	{
@@ -57,7 +61,7 @@ package Network
 		private function connectToRTMP():void {
 			updateStatus("Connecting to the RTMP server...");
 			
-			netConnection.connect("rtmfp://localhost/live");
+			netConnection.connect("rtmfp://141.28.126.83/live");
 			netConnectTimer.start();
 		}
 		
@@ -95,21 +99,24 @@ package Network
 					
 					// open sending stream
 					netSendStream = new NetStream(netConnection);
-					netSendStream.addEventListener(NetStatusEvent.NET_STATUS, netStreamStatus);
-
 					netSendStream.client = this;
-					netSendStream.publish("livestream");
+					
+					netSendStream.addEventListener(NetStatusEvent.NET_STATUS, netSendStreamStatus);
+					netSendStream.publish("hfubloxx_" + localID);
 					netSendStream.videoSampleAccess = true;
+					
 					camHandler.sendToStream(netSendStream);
 					
 					// open receiving stream
 					netRecvStream = new NetStream(netConnection);
-					netRecvStream.client = this;					
-					netRecvStream.checkPolicyFile = true;
-				    netRecvStream.play("livestream");
+					netRecvStream.client = this;
+					
+					netRecvStream.addEventListener(NetStatusEvent.NET_STATUS, netRecvStreamStatus);
+				    netRecvStream.play("hfubloxx_" + localID);
+					netRecvStream.bufferTime = 0.5;
 					
 					camHandler.recvFromStream(netRecvStream);
-										
+					
 					break;
 				}
 					
@@ -126,11 +133,18 @@ package Network
 			}
 		}
 		
-		// NetStream Client //
+		// NetSendStream Client //
 		
-		private function netStreamStatus(event:NetStatusEvent):void
+		private function netSendStreamStatus(event:NetStatusEvent):void
 		{
-			updateStatus(event.info.code + " (NetStream)");
+			updateStatus(event.info.code + " (NetSendStream)");
+		}
+
+		// NetRecvStream Client //
+		
+		private function netRecvStreamStatus(event:NetStatusEvent):void
+		{
+			updateStatus(event.info.code + " (NetRecvStream)");
 		}
 
 		public function receiveSomeData(str:Object):void
@@ -141,10 +155,12 @@ package Network
 		public function sendMessage(type:String, message:String):void
 		{
 			netSendStream.send("receiveSomeData", "Hallo :-)");
+			camHandler.recvFromStream(netRecvStream);
 		}
 						
 		public function updateStatus(message:String):void
 		{   
+			trace("Network: " + message);
 			netStatus.text = "Network: " + message;
 		}
 		

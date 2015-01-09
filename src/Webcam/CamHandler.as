@@ -85,7 +85,7 @@ package Webcam
 			{
 				localCam.camVid.attachCamera(null);
 				
-				camera.removeEventListener(Event.ENTER_FRAME, onVideoFrame);
+				camera.removeEventListener(Event.ENTER_FRAME, onLocalVideoFrame);
 				camera = null;
 				
 				microphone = null;
@@ -98,11 +98,12 @@ package Webcam
 				if (camera)
 				{
 					camera.setMode(localCam.camSize.width, localCam.camSize.height, 24);
+					camera.setQuality(0, 85);
 					
 					localCam.camVid = new Video(localCam.camSize.height, localCam.camSize.width);
 					localCam.camVid.attachCamera(camera);
 					
-					camera.addEventListener(Event.VIDEO_FRAME, onVideoFrame);
+					camera.addEventListener(Event.VIDEO_FRAME, onLocalVideoFrame);
 				} else
 					throw Error("No camera found.");
 			}
@@ -121,9 +122,16 @@ package Webcam
 				sendToStream(localCam.netStream);
 		}
 		
-		private function onVideoFrame(evt:Event):void {
+		private function onLocalVideoFrame(evt:Event):void {
 			localCam.camBmpData.draw(localCam.camVid);
 			CamHelper.uploadFromBitmapData(localCam.camImg, localCam.camBmpData);
+		}
+		
+		private function onRemoteVideoFrame(evt:Event):void {
+			if (remoteCam.camVid.videoWidth > 0) {
+				remoteCam.camBmpData.draw(remoteCam.camVid);
+				CamHelper.uploadFromBitmapData(remoteCam.camImg, remoteCam.camBmpData);
+			}
 		}
 		
 		public function sendToStream(netStream:NetStream):void
@@ -141,11 +149,11 @@ package Webcam
 		{
 			remoteCam.netStream = netStream;
 			
-			if (remoteCam.camVid != null) {
+			if (remoteCam.camImg != null) {
 				remoteCam.camVid = new Video(remoteCam.camSize.height, remoteCam.camSize.width);
 				remoteCam.camVid.attachNetStream(netStream);
-				
-				remoteCam.camVid.addEventListener(Event.ENTER_FRAME, onVideoFrame);
+
+				remoteCam.camVid.addEventListener(Event.ENTER_FRAME, onRemoteVideoFrame);
 			}
 		}
 	}
