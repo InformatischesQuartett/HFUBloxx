@@ -1,9 +1,7 @@
 package GameObjects {
 	
-	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
-	import starling.text.TextField;
 	
 	/**
 	 * This class describes the walls of the game, called "Bloxx"
@@ -16,9 +14,21 @@ package GameObjects {
 		private var posY : int;
 		
 		
-		public function Bloxx() {
-			////todo: make switch case/ or use array for different textures
-			//bloxxImage = new Image(Assets.getTexture("");
+		/**
+		 * Constructor of the Bloxx. It gets its position as arguments 
+		 */
+		public function Bloxx(posX : int, posY : int) {
+			//image
+			bloxxImage = new Image(Assets.getTexture("bloxx_White"));
+			
+			//position
+			this.posX = posX;
+			this.posY = posY;
+			bloxxImage.x = posX;
+			bloxxImage.y = posY;
+			
+			//adds Image to this stage
+			this.addChild(bloxxImage);
 		}
 	}
 }
