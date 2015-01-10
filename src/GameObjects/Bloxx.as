@@ -20,9 +20,14 @@ package GameObjects {
 			//image
 			bloxxImage = new Image(Assets.getTexture("bloxx_White"));
 			
+			bloxxImage.scaleX = 0.1;
+			bloxxImage.scaleY = 0.1;
+			
 			//position
 			bloxxImage.x = posX;
 			bloxxImage.y = posY;
+			
+			
 			
 			//adds Image to this stage
 			this.addChild(bloxxImage);

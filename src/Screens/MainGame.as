@@ -2,6 +2,7 @@ package Screens {
 
 	import flash.events.Event;
 	
+	import GameObjects.Bloxx;
 	import GameObjects.Hat;
 	import GameObjects.Player;
 	
@@ -60,10 +61,7 @@ package Screens {
 				trace("At array pos " + i + " the horizontal array is: " + gridArray[i]);
 			}
 			
-			chooseWallPos();
-			//buildWalls();
-			
-
+				
 			//set background Texture of screen
 			var bg : Image = new Image(Assets.getTexture("bg"));
 			bg.width = HFUBloxx.GameWidth;
@@ -75,6 +73,10 @@ package Screens {
 			backgroundGame.width = HFUBloxx.GameWidth/2;
 			backgroundGame.height = HFUBloxx.GameHeight;
 			this.addChild(backgroundGame);
+			
+			chooseWallPos();
+			drawBloxx();
+			//buildWalls();
 			
 			//spawns player and adds him to main stage
 			testHat = new Hat();
@@ -100,12 +102,14 @@ package Screens {
 		//draw a bloxx according to random color and random shape
 		public function drawBloxx() : void {
 			for(var i : int = 0; i < bloxxSize; i++){
-				for(var j : int = 0; j < bloxxSize; i ++){
+				for(var j : int = 0; j < bloxxSize; j++){
 					if(gridArray[i][j] == true){
-						
+						trace("BuildWall");
+						var aBloxx : Bloxx = new Bloxx(bloxxSize * (j + 1), bloxxSize * (i + 1));
+						this.addChild(aBloxx);
 					}
 				}
-			}
+			}			
 		}
 		
 		/**
