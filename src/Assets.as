@@ -23,13 +23,13 @@
 		[Embed(source="../assets/textures/play_button.png")]
 		public static const play_Button:Class;
 		
-		[Embed(source="../assets/textures/button_x.png")]
+		[Embed(source="../assets/textures/y_button.png")]
 		public static const y_Button:Class;
 		
-		[Embed(source="../assets/textures/button_left.png")]
+		[Embed(source="../assets/textures/left_button.png")]
 		public static const left_Button:Class;
 		
-		[Embed(source="../assets/textures/button_right.png")]
+		[Embed(source="../assets/textures/right_button.png")]
 		public static const right_Button:Class;
 		
 		[Embed(source="../assets/textures/button_controller.png")]
@@ -53,14 +53,38 @@
 		[Embed(source="../assets/textures/avatar_yel.png")]
 		public static const avatar_Yellow:Class;
 		
-		[Embed(source="../assets/textures/avatar_ora.png")]
-		public static const avatar_Orange:Class;
+		[Embed(source="../assets/textures/avatar_lil.png")]
+		public static const avatar_Lilac:Class;
 		
 		
-		// BloXx
+		// BloXX
+			
+		[Embed(source="../assets/textures/bloxx_green1.png")]
+		public static const bloxx_Green1:Class;
 		
-		[Embed(source="../assets/textures/bloxx_white.png")]
-		public static const bloxx_White:Class;
+		[Embed(source="../assets/textures/bloxx_green2.png")]
+		public static const bloxx_Green2:Class;
+		
+		[Embed(source="../assets/textures/bloxx_turquoise.png")]
+		public static const bloxx_Turquoise:Class;
+		
+		[Embed(source="../assets/textures/bloxx_blue.png")]
+		public static const bloxx_Blue:Class;
+		
+		[Embed(source="../assets/textures/bloxx_yellow.png")]
+		public static const bloxx_Yellow:Class;
+		
+		[Embed(source="../assets/textures/bloxx_gray.png")]
+		public static const bloxx_Gray:Class;
+		
+		[Embed(source="../assets/textures/bloxx_red.png")]
+		public static const bloxx_Red:Class;
+		
+		[Embed(source="../assets/textures/bloxx_lilac.png")]
+		public static const bloxx_Lilac:Class;
+		
+		[Embed(source="../assets/textures/bloxx_orange.png")]
+		public static const bloxx_Orange:Class;
 		
 		
 		// Pipes
@@ -74,14 +98,8 @@
 		[Embed(source="../assets/textures/pipe_pink.png")]
 		public static const pipe_Pink:Class;
 		
-		[Embed(source="../assets/textures/pipe_yellow.png")]
+		[Embed(source="../assets/textures/bloxx_yellow.png")]
 		public static const pipe_Yellow:Class;
-		
-		[Embed(source="../assets/textures/pipe_red.png")]
-		public static const pipe_Red:Class;
-		
-		[Embed(source="../assets/textures/pipe_orange.png")]
-		public static const pipe_Orange:Class;
 		
 		
 		// Hüte
@@ -152,7 +170,7 @@
 		
 		private static var gameTextures:Dictionary = new Dictionary();
 		
-		public static function getTexture(name:String):Texture
+		public static function getTexture(name:String, width:int=0, height:int=0):Texture
 		{
 			if(gameTextures[name] == undefined)
 			{

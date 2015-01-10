@@ -24,19 +24,6 @@ package Screens {
 		public static var backgroundGame : Image;
 		
 		public static var testHat : Hat;
-		
-		// Mapgrids
-		
-		private var bloxxSize : int = 10;
-		
-		// Determines how many Bloxx fit in one line
-		private var verticalGrids : int = 6;
-		private var horizontalGrids : int = 10;
-		
-		// 2D-Array
-		private var gridArray : Array;
-		
-		
 
 		public function MainGame() {
 			//call super class' constructor
@@ -52,6 +39,7 @@ package Screens {
 			colorHatPipeArray = new Array("green", "pink", "yellow", "blue");
 			
 			colorPlayerArray = new Array("avatar_Yellow", "avatar_Voilet", "avatar_Red", "avatar_Green");
+<<<<<<< HEAD
 			
 			//gridArray		
 			gridArray = new Array();
@@ -62,6 +50,9 @@ package Screens {
 			}
 			
 				
+=======
+
+>>>>>>> origin/master
 			//set background Texture of screen
 			var bg : Image = new Image(Assets.getTexture("bg"));
 			bg.width = HFUBloxx.GameWidth;
@@ -87,20 +78,15 @@ package Screens {
 		}//end constructor
 		
 		/**
-		 * returns either 1 or 0
 		 **/
-		public function randomize () : int {
-			var aNumber : Number = Math.random();
-			if(aNumber < 0.5){
-				aNumber = 0;
-			}else{
-				aNumber = 1;
-			}
-			return int(aNumber);
+		public function randomize (anArray : Array) : int {
+			var aNumber : int = 0;
+			return aNumber;
 		}
 		
 		//draw a bloxx according to random color and random shape
 		public function drawBloxx() : void {
+<<<<<<< HEAD
 			for(var i : int = 0; i < bloxxSize; i++){
 				for(var j : int = 0; j < bloxxSize; j++){
 					if(gridArray[i][j] == true){
@@ -110,6 +96,9 @@ package Screens {
 					}
 				}
 			}			
+=======
+			
+>>>>>>> origin/master
 		}
 		
 		/**
@@ -138,26 +127,6 @@ package Screens {
 				}
 				counter++;
 			}
-		}
-		
-		public function chooseWallPos() : void{
-			for(var i : int = 0; i < horizontalGrids; i++){
-				for(var j : int = 0; j < verticalGrids; j++){
-					var temp : int = randomize();
-					if(temp == 1){
-						gridArray[i][j] = true; 
-					}else{
-						gridArray[i][j] = false;
-					}
-				}
-			}
-			trace(gridArray);
-		}
-		
-		public function buildWalls() : void{
-		}
-		
-		public function registerWallAsColliders() : void{
 		}
 		
 	}
