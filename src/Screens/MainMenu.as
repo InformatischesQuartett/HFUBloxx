@@ -66,13 +66,6 @@ package Screens
 		
 		public function userScore_onClick(event:Event):void
 		{
-			/*
-			var screen:Sprite = new App42LeaderBoard();
-			this.parent.addChild(screen);
-			this.removeFromParent(true);
-			*/
-
-
 			netHandler.sendMessage("msg", "this is a test");
 		}
 	}

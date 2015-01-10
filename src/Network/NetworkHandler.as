@@ -1,9 +1,6 @@
 package Network 
 {
-	import flash.events.Event;
-	import flash.events.NetDataEvent;
 	import flash.events.NetStatusEvent;
-	import flash.events.StatusEvent;
 	import flash.events.TimerEvent;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
@@ -18,9 +15,9 @@ package Network
 	
 	public class NetworkHandler extends Sprite
 	{
-		public var netConnection:NetConnection;
-		public var netSendStream:NetStream;
-		public var netRecvStream:NetStream;
+		private var netConnection:NetConnection;
+		private var netSendStream:NetStream;
+		private var netRecvStream:NetStream;
 
 		private var netConnectTimer:Timer;
 		private var netConnectLimit:Number = 5000;
@@ -30,11 +27,16 @@ package Network
 		
 		private var camHandler: CamHandler;
   
-		public var localID: int;
+		public static var localID: String = "Furtwangen";
+		public static var remoteID: String;
 		
 		public function NetworkHandler()
 		{
-			localID = int (Math.random() * 100000);
+			// location
+			if (localID == "Furtwangen")
+				remoteID = "Schwenningen";
+			else
+				remoteID = "Furtwangen";
 			
 			// network information
 			netStatus = new TextField(500, 20, "--", "Arial", 12, Color.WHITE);
@@ -48,7 +50,7 @@ package Network
 			// create connection to the FMS
 			netConnection = new NetConnection();
 			
-			netConnection.client = this;
+			netConnection.client = { onBWDone: function():void { } };
 			netConnection.addEventListener(NetStatusEvent.NET_STATUS, netConnectionStatus);
 
 			netConnectTimeout = false;
@@ -74,19 +76,42 @@ package Network
 				netConnection.close();
 		}
 		
-		// NetConnection Client //
+		public function setCamHandler(handler:CamHandler):void
+		{
+			camHandler = handler;
+		}
 		
-		public function onBWDone(...rest):void
-		{ 
-			var p_bw:Number;
-			
-			if (rest.length > 0)
-				p_bw = rest[0];
-
-			if (!isNaN(p_bw))
-				trace("bandwidth = " + p_bw + " Kbps."); 
-		} 
+		public function sendMessage(type:String, message:*):void
+		{
+			if (netSendStream != null) {
+				var msg:Object = new Object();
 				
+				msg.senderID = localID;
+				
+				switch(type)
+				{					
+					default:
+						msg.data = message;
+				}
+				
+				netSendStream.send(type, msg);
+				updateStatus("Sent message '" + message + "' of type '" + type + "'.");
+			}
+		}
+		
+		private function isLocalMsg(msg:Object):Boolean
+		{
+			return (msg.senderID == localID);
+		}
+		
+		public function updateStatus(message:String):void
+		{   
+			trace("Network: " + message);
+			netStatus.text = "Network: " + message;
+		}
+		
+		// netConnection events //
+		
 		private function netConnectionStatus(event:NetStatusEvent):void
 		{
 			updateStatus(event.info.code + " (NetConnection)");
@@ -101,7 +126,7 @@ package Network
 					netSendStream = new NetStream(netConnection);
 					netSendStream.client = this;
 					
-					netSendStream.addEventListener(NetStatusEvent.NET_STATUS, netSendStreamStatus);
+					netSendStream.addEventListener(NetStatusEvent.NET_STATUS, netStreamSendStatus);
 					netSendStream.publish("hfubloxx_" + localID);
 					netSendStream.videoSampleAccess = true;
 					
@@ -111,8 +136,8 @@ package Network
 					netRecvStream = new NetStream(netConnection);
 					netRecvStream.client = this;
 					
-					netRecvStream.addEventListener(NetStatusEvent.NET_STATUS, netRecvStreamStatus);
-				    netRecvStream.play("hfubloxx_" + localID);
+					netRecvStream.addEventListener(NetStatusEvent.NET_STATUS, netStreamRecvStatus);
+				    netRecvStream.play("hfubloxx_" + remoteID);
 					netRecvStream.bufferTime = 0.5;
 					
 					camHandler.recvFromStream(netRecvStream);
@@ -133,40 +158,46 @@ package Network
 			}
 		}
 		
-		// NetSendStream Client //
-		
-		private function netSendStreamStatus(event:NetStatusEvent):void
+		// netSendStream / netRecvStream events //
+				
+		private function netStreamSendStatus(event:NetStatusEvent):void
 		{
-			updateStatus(event.info.code + " (NetSendStream)");
-		}
-
-		// NetRecvStream Client //
-		
-		private function netRecvStreamStatus(event:NetStatusEvent):void
-		{
-			updateStatus(event.info.code + " (NetRecvStream)");
-		}
-
-		public function receiveSomeData(str:Object):void
-		{
-			trace("Incoming: " + str);
-		}
-		
-		public function sendMessage(type:String, message:String):void
-		{
-			netSendStream.send("receiveSomeData", "Hallo :-)");
-			camHandler.recvFromStream(netRecvStream);
-		}
-						
-		public function updateStatus(message:String):void
-		{   
-			trace("Network: " + message);
-			netStatus.text = "Network: " + message;
+			var appendix:String = " (netSendStream)";
+			
+			switch (event.info.code)
+			{
+				case "NetStream.Publish.Start":
+				{
+					camHandler.sendToStream(netSendStream);
+					updateStatus(event.info.code + appendix);
+					
+					return;
+				}
+			}
+			
+			updateStatus(event.info.code + appendix);
 		}
 		
-		public function setCamHandler(handler:CamHandler):void
+		private function netStreamRecvStatus(event:NetStatusEvent):void
 		{
-			camHandler = handler;
+			var appendix:String = " (netRecvStream)";
+			
+			switch (event.info.code)
+			{
+				case "NetStream.Buffer.Empty":
+					return;
+					
+				case "NetStream.Buffer.Full":
+					return;
+					
+				case "NetStream.Video.DimensionChange":
+				{
+					updateStatus("Receiving video/audio stream data" + appendix);
+					return;
+				}
+			}
+			
+			updateStatus(event.info.code + appendix);
 		}
 	}
 }
