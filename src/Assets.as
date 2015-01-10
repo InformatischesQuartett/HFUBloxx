@@ -152,7 +152,7 @@
 		
 		private static var gameTextures:Dictionary = new Dictionary();
 		
-		public static function getTexture(name:String, width:int=0, height:int=0):Texture
+		public static function getTexture(name:String):Texture
 		{
 			if(gameTextures[name] == undefined)
 			{

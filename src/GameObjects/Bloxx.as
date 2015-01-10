@@ -10,8 +10,7 @@ package GameObjects {
 		
 		private var bloxxSize : int = 16; //todo: set correct size
 		private var bloxxImage : Image;
-		private var posX : int;
-		private var posY : int;
+
 		
 		
 		/**
@@ -22,8 +21,6 @@ package GameObjects {
 			bloxxImage = new Image(Assets.getTexture("bloxx_White"));
 			
 			//position
-			this.posX = posX;
-			this.posY = posY;
 			bloxxImage.x = posX;
 			bloxxImage.y = posY;
 			
