@@ -23,14 +23,20 @@
 		[Embed(source="../assets/textures/play_button.png")]
 		public static const play_Button:Class;
 		
-		[Embed(source="../assets/textures/y_button.png")]
+		[Embed(source="../assets/textures/button_y.png")]
 		public static const y_Button:Class;
 		
-		[Embed(source="../assets/textures/left_button.png")]
-		public static const left_Button:Class;
+		[Embed(source="../assets/textures/button_a.png")]
+		public static const a_Button:Class;
 		
-		[Embed(source="../assets/textures/right_button.png")]
-		public static const right_Button:Class;
+		[Embed(source="../assets/textures/button_x.png")]
+		public static const x_Button:Class;
+		
+		[Embed(source="../assets/textures/button_b.png")]
+		public static const b_Button:Class;
+		
+		[Embed(source="../assets/textures/button_back.png")]
+		public static const back_Button:Class;
 		
 		[Embed(source="../assets/textures/button_controller.png")]
 		public static const controller_Button:Class;
@@ -38,9 +44,38 @@
 		[Embed(source="../assets/textures/button_herz.png")]
 		public static const herz_Button:Class;
 		
+		[Embed(source="../assets/textures/button_left.png")]
+		public static const left_Button:Class;
+		
+		[Embed(source="../assets/textures/button_music.png")]
+		public static const music_Button:Class;
+		
+		[Embed(source="../assets/textures/button_replay.png")]
+		public static const replay_Button:Class;
+		
+		[Embed(source="../assets/textures/button_right.png")]
+		public static const right_Button:Class;
+		
+		[Embed(source="../assets/textures/button_settings.png")]
+		public static const settings_Button:Class;
+		
+		[Embed(source="../assets/textures/button_sound.png")]
+		public static const sound_Button:Class;
+		
+		[Embed(source="../assets/textures/button_speechbubble.png")]
+		public static const speechbubble_Button:Class;
+		
 		[Embed(source="../assets/textures/button_time.png")]
 		public static const time_Button:Class;
-			
+		
+		[Embed(source="../assets/textures/button_yes.png")]
+		public static const yes_Button:Class;
+		
+		[Embed(source="../assets/textures/button_yesyes.png")]
+		public static const yesyes_Button:Class;
+		
+		
+		
 		
 		// Spieliguren
 		
@@ -53,38 +88,14 @@
 		[Embed(source="../assets/textures/avatar_yel.png")]
 		public static const avatar_Yellow:Class;
 		
-		[Embed(source="../assets/textures/avatar_lil.png")]
-		public static const avatar_Lilac:Class;
+		[Embed(source="../assets/textures/avatar_ora.png")]
+		public static const avatar_Orange:Class;
 		
 		
 		// BloXX
 			
-		[Embed(source="../assets/textures/bloxx_green1.png")]
-		public static const bloxx_Green1:Class;
-		
-		[Embed(source="../assets/textures/bloxx_green2.png")]
-		public static const bloxx_Green2:Class;
-		
-		[Embed(source="../assets/textures/bloxx_turquoise.png")]
-		public static const bloxx_Turquoise:Class;
-		
-		[Embed(source="../assets/textures/bloxx_blue.png")]
-		public static const bloxx_Blue:Class;
-		
-		[Embed(source="../assets/textures/bloxx_yellow.png")]
-		public static const bloxx_Yellow:Class;
-		
-		[Embed(source="../assets/textures/bloxx_gray.png")]
-		public static const bloxx_Gray:Class;
-		
-		[Embed(source="../assets/textures/bloxx_red.png")]
-		public static const bloxx_Red:Class;
-		
-		[Embed(source="../assets/textures/bloxx_lilac.png")]
-		public static const bloxx_Lilac:Class;
-		
-		[Embed(source="../assets/textures/bloxx_orange.png")]
-		public static const bloxx_Orange:Class;
+		[Embed(source="../assets/textures/bloxx_white.png")]
+		public static const bloxx_White:Class;
 		
 		
 		// Pipes
@@ -101,6 +112,11 @@
 		[Embed(source="../assets/textures/bloxx_yellow.png")]
 		public static const pipe_Yellow:Class;
 		
+		[Embed(source="../assets/textures/bloxx_orange.png")]
+		public static const pipe_Orange:Class;
+		
+		[Embed(source="../assets/textures/bloxx_red.png")]
+		public static const pipe_Red:Class;
 		
 		// Hüte
 		
@@ -110,12 +126,29 @@
 		[Embed(source="../assets/textures/hat_green.png")]
 		public static const hat_Green:Class;
 		
-		[Embed(source="../assets/textures/hat_pink.png")]
-		public static const hat_Pink:Class;
+		[Embed(source="../assets/textures/hat_orange.png")]
+		public static const hat_Orange:Class;
 		
 		[Embed(source="../assets/textures/hat_yellow.png")]
 		public static const hat_Yellow:Class;
+		
+		[Embed(source="../assets/textures/hat_pink.png")]
+		public static const hat_Pink:Class;
+		
+		[Embed(source="../assets/textures/hat_red.png")]
+		public static const hat_Red:Class;
 				
+				
+		
+		//fonts
+		
+		[Embed(source="../assets/textures/font_game_over.png")]
+		public static const font_GameOver:Class;
+				
+		[Embed(source="../assets/textures/font_new_game.png")]
+		public static const font_NewGame:Class;
+				
+		
 		
 		// Misc
 		
