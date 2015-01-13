@@ -151,7 +151,7 @@ package Screens {
 				for(var j : int = 0; j < columnCount; j++){
 					if(gridArray[i][j] == true){
 						trace("BuildWall");
-						var aBloxx : Bloxx = new Bloxx(bloxxSize * (j + 1), bloxxSize * (i + 1));
+						var aBloxx : Bloxx = new Bloxx(j, i);
 						this.addChild(aBloxx);
 					}
 				}

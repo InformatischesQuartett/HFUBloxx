@@ -1,9 +1,7 @@
 package GameObjects {
 	
-	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
-	import starling.text.TextField;
 	
 	import Screens.MainGame;
 	
@@ -27,8 +25,8 @@ package GameObjects {
 			bloxxImage.height = (HFUBloxx.screenHeight) / MainGame.getRowCount(); 
 			
 			//position
-			bloxxImage.x = posX;
-			bloxxImage.y = posY;
+			bloxxImage.x = posX * bloxxImage.width ;
+			bloxxImage.y = posY * bloxxImage.height;
 			
 			//adds Image to this stage
 			this.addChild(bloxxImage);
