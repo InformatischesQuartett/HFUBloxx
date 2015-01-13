@@ -50,8 +50,8 @@ package
 		public var ldr : URLLoader;
 		
 		//basic config variables --> source: external XML file
-		public static var GameHeight : int;
-		public static var GameWidth : int;
+		public static var screenHeight : int;
+		public static var screenWidth : int;
 		public static var playerSize : int;
 		public static var borderSize : int;
 		
@@ -76,8 +76,8 @@ package
 			//describes the size of the black border stroke from the gamescreen
 			borderSize = 20;
 			//set the screen resolution
-			GameWidth = 800; //int(xmlContent.Display.gameWidth.@gw);//800; //Capabilities.screenResolutionX;
-			GameHeight = 600; //Capabilities.screenResolutionY;
+			screenWidth = 800; //int(xmlContent.Display.gameWidth.@gw);//800; //Capabilities.screenResolutionX;
+			screenHeight = 600; //Capabilities.screenResolutionY;
 			
 			//start game engine
 			mStarling = new Starling(MainMenu, stage);

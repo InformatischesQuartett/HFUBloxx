@@ -19,8 +19,8 @@ package GameObjects
 			hatImage.height = HFUBloxx.playerSize *  0.7; // 70%
 			hatImage.width = HFUBloxx.playerSize * 1.2;
 			
-			hatImage.x = (HFUBloxx.GameWidth/3);
-			hatImage.y = (HFUBloxx.GameHeight - hatImage.height)- HFUBloxx.borderSize;
+			hatImage.x = (HFUBloxx.screenWidth/3);
+			hatImage.y = (HFUBloxx.screenHeight - hatImage.height)- HFUBloxx.borderSize;
 			this.addChild(hatImage);
 			HFUBloxx.registerCollider(this);
 		}

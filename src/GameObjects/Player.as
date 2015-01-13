@@ -48,8 +48,8 @@ package GameObjects {
 			playerImage.smoothing = TextureSmoothing.TRILINEAR;
 			
 			//position
-			playerImage.x = (HFUBloxx.GameWidth/4) - (playerImage.width/2);
-			playerImage.y = (HFUBloxx.GameHeight - playerImage.height)- HFUBloxx.borderSize;
+			playerImage.x = (HFUBloxx.screenWidth/4) - (playerImage.width/2);
+			playerImage.y = (HFUBloxx.screenHeight - playerImage.height)- HFUBloxx.borderSize;
 			
 			//adds Image to this stage
 			this.addChild(playerImage);

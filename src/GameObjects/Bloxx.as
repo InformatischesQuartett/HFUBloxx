@@ -5,6 +5,8 @@ package GameObjects {
 	import starling.display.Sprite;
 	import starling.text.TextField;
 	
+	import Screens.MainGame;
+	
 	/**
 	 * This class describes the walls of the game, called "Bloxx"
 	 **/
@@ -20,9 +22,9 @@ package GameObjects {
 			//image
 			bloxxImage = new Image(Assets.getTexture("bloxx_White"));
 			
-			// size
-			bloxxImage.scaleX = 0.1;
-			bloxxImage.scaleY = 0.1;
+			// size (determined by the game size devided through the respective gridCount)
+			bloxxImage.width = (HFUBloxx.screenWidth/2) / MainGame.getColumnCount();
+			bloxxImage.height = (HFUBloxx.screenHeight) / MainGame.getRowCount(); 
 			
 			//position
 			bloxxImage.x = posX;

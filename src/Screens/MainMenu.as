@@ -11,12 +11,12 @@ package Screens
 			super();
 
 			var bg : Image = new Image(Assets.getTexture("bg"));
-			bg.width = HFUBloxx.GameWidth;
-			bg.height = HFUBloxx.GameHeight;
+			bg.width = HFUBloxx.screenWidth;
+			bg.height = HFUBloxx.screenHeight;
 			this.addChild(bg);
 			
 			var playButton : Button = new Button(Assets.getTexture("play_Button"));
-			playButton.x = HFUBloxx.GameWidth/3;
+			playButton.x = HFUBloxx.screenWidth/3;
 			playButton.y = 250;
 			this.addChild(playButton);
 			playButton.addEventListener(Event.TRIGGERED, plyBtn_onClick);

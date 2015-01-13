@@ -27,17 +27,21 @@ package Screens {
 		
 		// Mapgrids
 		
+		//Determins the size of the bloxx
 		private var bloxxSize : int = 10;
 		
 		// Determines how many Bloxx fit in one line
-		private var verticalGrids : int = 6;
-		private var horizontalGrids : int = 10;
+		private static var columnCount : int = 6;
+		private static var rowCount : int = 10;
 		
 		// 2D-Array
 		private var gridArray : Array;
-
+		
+		/**
+		 * Constructor of the MainGame
+		 */
 		public function MainGame() {
-			//call super class' constructor
+			//calls super class' constructor
 			super();
 			
 			Starling.current.nativeStage.addEventListener(Event.ENTER_FRAME, update);
@@ -51,29 +55,31 @@ package Screens {
 			
 			colorPlayerArray = new Array("avatar_Yellow", "avatar_Voilet", "avatar_Red", "avatar_Green");
 			
-			//gridArray		
+			//gridArray for positioning bloxx	
 			gridArray = new Array();
 
-			for(var i : int = 0; i < horizontalGrids; i++){
-				gridArray[i] = [false,false,false,false,false,false];
-				trace("At array pos " + i + " the horizontal array is: " + gridArray[i]);
+			for(var i : int = 0; i < rowCount; i++){
+				gridArray[i] = new Array();
+				for (var j : int = 0; j < columnCount; j++) {
+					gridArray[i][j] = false;
+				}
+				trace("At row number " + i + " the column values are: " + gridArray[i]);
 			}
 
 			//set background Texture of screen
 			var bg : Image = new Image(Assets.getTexture("bg"));
-			bg.width = HFUBloxx.GameWidth;
-			bg.height = HFUBloxx.GameHeight;
+			bg.width = HFUBloxx.screenWidth;
+			bg.height = HFUBloxx.screenHeight;
 			this.addChild(bg);
 			
 			//set background Texture of game
 			backgroundGame = new Image(Assets.getTexture("bg_Game"));
-			backgroundGame.width = HFUBloxx.GameWidth/2;
-			backgroundGame.height = HFUBloxx.GameHeight;
+			backgroundGame.width = HFUBloxx.screenWidth/2;
+			backgroundGame.height = HFUBloxx.screenHeight;
 			this.addChild(backgroundGame);
 			
-			chooseWallPos();
+			chooseBloxxPos();
 			drawBloxx();
-			//buildWalls();
 			
 			//spawns player and adds him to main stage
 			testHat = new Hat();
@@ -84,7 +90,22 @@ package Screens {
 		}//end constructor
 		
 		/**
+		 * Getter for columnCount
+		 */
+		public static function getColumnCount () : int {
+			return columnCount;
+		}
+		
+		/**
+		 * Getter for rowCount
+		 */
+		public static function getRowCount () : int {
+			return rowCount;
+		}
+		
+		/**
 		 * returns either 1 or 0
+		 * for certain random processes
 		 **/
 		public function randomize () : int {
 			var aNumber : Number = Math.random();
@@ -103,22 +124,13 @@ package Screens {
 //			return aNumber;
 //		}
 		
-		//draw a bloxx according to random color and random shape
-		public function drawBloxx() : void {
-			for(var i : int = 0; i < bloxxSize; i++){
-				for(var j : int = 0; j < bloxxSize; j++){
-					if(gridArray[i][j] == true){
-						trace("BuildWall");
-						var aBloxx : Bloxx = new Bloxx(bloxxSize * (j + 1), bloxxSize * (i + 1));
-						this.addChild(aBloxx);
-					}
-				}
-			}			
-		}
 		
-		public function chooseWallPos() : void{
-			for(var i : int = 0; i < horizontalGrids; i++){
-				for(var j : int = 0; j < verticalGrids; j++){
+		/**
+		 * Randomly chooses the position of the bloxx
+		 */
+		public function chooseBloxxPos() : void{
+			for(var i : int = 0; i < rowCount; i++){
+				for(var j : int = 0; j < columnCount; j++){
 					var temp : int = randomize();
 					if(temp == 1){
 						gridArray[i][j] = true; 
@@ -130,8 +142,24 @@ package Screens {
 			trace(gridArray);
 		}
 		
-		public function buildWalls() : void{
+		/**
+		 * Draws the bloxx
+		 */
+		public function drawBloxx() : void {
+			//iterate through 2d Array and build a bloxx when a "true" appears
+			for(var i : int = 0; i < rowCount; i++){
+				for(var j : int = 0; j < columnCount; j++){
+					if(gridArray[i][j] == true){
+						trace("BuildWall");
+						var aBloxx : Bloxx = new Bloxx(bloxxSize * (j + 1), bloxxSize * (i + 1));
+						this.addChild(aBloxx);
+					}
+				}
+			}			
 		}
+		
+		
+		
 		
 		public function registerWallAsColliders() : void{
 		}

@@ -11,3 +11,4 @@ bin-release/
 # information for Eclipse / Flash Builder.
 
 src/Network/config.ini
+src/Network/NetworkHandler.as
