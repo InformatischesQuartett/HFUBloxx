@@ -14,6 +14,11 @@ package
 	
 	import Network.NetworkHandler;
 	
+	import Ouya.ControllerInput;
+	import Ouya.Controller.OuyaController;
+	import Ouya.Controller.Xbox360Controller;
+	
+	import Screens.BloxxScreen;
 	import Screens.MainGame;
 	import Screens.MainMenu;
 	
@@ -21,7 +26,6 @@ package
 	
 	import starling.core.Starling;
 	import starling.events.Event;
-	import Screens.BloxxScreen;
 	
 	//settings
 	[SWF(frameRate="60", width="800", height="600")]
@@ -79,6 +83,12 @@ package
 			screenWidth = 800; //int(xmlContent.Display.gameWidth.@gw);//800; //Capabilities.screenResolutionX;
 			screenHeight = 600; //Capabilities.screenResolutionY;
 			
+			ControllerInput.initialize(stage);
+			
+			if (ControllerInput.hasReadyController()) {
+				trace("Controller gefunden!", stage);
+				var xboxController = ControllerInput.getReadyController() as Xbox360Controller;
+			}
 			//start game engine
 			mStarling = new Starling(MainMenu, stage);
 			
