@@ -10,7 +10,6 @@ package
 	import flash.geom.Rectangle;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import flash.system.Capabilities;
 	import flash.ui.GameInput;
 	import flash.ui.GameInputDevice;
 	import flash.ui.Keyboard;
@@ -79,6 +78,7 @@ package
 			//loading external data
 			loadData();
 			
+			//start GameController
 			GameControllerXbox();
 			/*Game Configuration --> put these parameters in an external file*/
 			//defines the image size of the ghost avatar
@@ -213,8 +213,6 @@ package
 		 * Event handler when keys are pressed down
 		 **/
 		public function onKeysDown(_event : KeyboardEvent) : void {
-			
-			trace("XboxController")
 			keysDown[_event.keyCode] = true;
 			
 			switch(_event.keyCode) {
@@ -260,21 +258,41 @@ package
 		}
 		
 		private function onEnterFrame(e:flash.events.Event):void {
+			if(xboxController.start.pressed || xboxController.x.pressed) {
+			}
+			
 			if(xboxController.a.pressed) {
-				trace('The A button'); 
+				up = true;			
+			} else {
+				up = false;
 			}
 			
 			if(xboxController.b.pressed) {
-				trace('The B button'); 
+				right = true;			
+			} else {
+				left = false;
 			}
 			
-			if(xboxController.y.pressed) {
-				trace('The Y button');				
+			if(xboxController.dpad.right.held || xboxController.leftStick.right.held) {
+				right = true;			
+			} else if (!xboxController.dpad.right.held && !xboxController.leftStick.right.held) {
+				right = false;
 			}
-			if(xboxController.x.pressed) {
-				trace('The X button');				
+			
+			if(xboxController.dpad.left.held || xboxController.leftStick.left.held) {
+				left = true;			
+			} else if (!xboxController.dpad.left.held && !xboxController.leftStick.left.held) {
+				right = false;
 			}
+			
+			if(xboxController.dpad.up.held || xboxController.leftStick.up.held) {
+				up = true;			
+			} else if (!xboxController.dpad.up.held && !xboxController.leftStick.up.held) {
+				down = false;
+			}
+			
 		}
+
 		/**
 		 * 
 		 * register coliders for collision checking
@@ -316,7 +334,7 @@ package
 				ControllerInput.initialize(stage);
 				
 				if (ControllerInput.hasReadyController()) {
-					trace("Controller gefunden!");
+					trace("Xbox Controller gefunden!");
 					xboxController = ControllerInput.getReadyController() as Xbox360Controller;
 				}
 			});
