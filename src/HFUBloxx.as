@@ -4,6 +4,7 @@ package
 	//import engine libs
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.GameInputEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.KeyboardEvent;
 	import flash.geom.Rectangle;
@@ -11,18 +12,19 @@ package
 	import flash.net.URLRequest;
 	import flash.system.Capabilities;
 	import flash.ui.Keyboard;
+	import flash.ui.GameInput;
+	import flash.ui.GameInputDevice;
 	
 	import Network.NetworkHandler;
-	
-	import Ouya.ControllerInput;
-	import Ouya.Controller.OuyaController;
-	import Ouya.Controller.Xbox360Controller;
 	
 	import Screens.BloxxScreen;
 	import Screens.MainGame;
 	import Screens.MainMenu;
 	
 	import Webcam.CamHandler;
+	
+	import io.arkeus.ouya.ControllerInput;
+	import io.arkeus.ouya.controller.Xbox360Controller;
 	
 	import starling.core.Starling;
 	import starling.events.Event;
@@ -53,6 +55,8 @@ package
 		public var xmlContent : XML;
 		public var ldr : URLLoader;
 		
+		public static var gameInput:GameInput = new GameInput();
+		
 		//basic config variables --> source: external XML file
 		public static var screenHeight : int;
 		public static var screenWidth : int;
@@ -74,6 +78,7 @@ package
 			//loading external data
 			loadData();
 			
+			GameControllerXbox();
 			/*Game Configuration --> put these parameters in an external file*/
 			//defines the image size of the ghost avatar
 			playerSize = 40;
@@ -83,12 +88,16 @@ package
 			screenWidth = 800; //int(xmlContent.Display.gameWidth.@gw);//800; //Capabilities.screenResolutionX;
 			screenHeight = 600; //Capabilities.screenResolutionY;
 			
+			/*
 			ControllerInput.initialize(stage);
 			
 			if (ControllerInput.hasReadyController()) {
-				trace("Controller gefunden!", stage);
+				trace("Controller gefunden!");
 				var xboxController = ControllerInput.getReadyController() as Xbox360Controller;
 			}
+			
+			*/
+			
 			//start game engine
 			mStarling = new Starling(MainMenu, stage);
 			
@@ -201,6 +210,8 @@ package
 		 * Event handler when keys are pressed down
 		 **/
 		public function onKeysDown(_event : KeyboardEvent) : void {
+			
+			trace("XboxController")
 			keysDown[_event.keyCode] = true;
 			
 			switch(_event.keyCode) {
@@ -252,6 +263,41 @@ package
 		public static function registerCollider(aObject:Object) : void{
 			colliderArray.push(aObject); 	
 			trace(aObject);
+		}
+		
+		public function GameControllerXbox()
+		{
+			if(GameInput.isSupported)
+				trace("GameInput is supported! moving on...");
+			else
+				trace("GameInput is not supported!");
+			
+			var numDevices:uint;
+			trace(GameInput.numDevices);
+			if ((numDevices = GameInput.numDevices) > 0)
+			{
+				var device:GameInputDevice;
+				for (var i:uint = 0; i < numDevices; i++)
+				{
+					device = GameInput.getDeviceAt(i);
+					if(device)
+						trace("game input device found",device.name);
+					else
+						trace("wait... did gameInput get magically garbage collected?",gameInput? "no it's fine" : "yep it did.");
+				}
+			}
+			else
+				trace("there's no devices in the list yet.");
+			
+			gameInput.addEventListener(GameInputEvent.DEVICE_ADDED,function handleDeviceAdded(e:GameInputEvent):void
+			{
+				trace("game input device added",e.device.name);				
+			});
+			
+			gameInput.addEventListener(GameInputEvent.DEVICE_REMOVED,function handleDeviceRemovedEvent(e:GameInputEvent):void
+			{
+				trace("game input device removed",e.device.name);
+			});
 		}
 		
 	} //end class

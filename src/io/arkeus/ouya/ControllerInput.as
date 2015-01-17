@@ -1,4 +1,4 @@
-package Ouya{
+package io.arkeus.ouya {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.GameInputEvent;
@@ -8,10 +8,10 @@ package Ouya{
 	import flash.ui.Keyboard;
 	import flash.utils.getTimer;
 	
-	import Ouya.Controller.GameController;
-	import Ouya.Controller.OuyaController;
-	import Ouya.Controller.Xbox360Controller;
-	
+	import io.arkeus.ouya.controller.GameController;
+	import io.arkeus.ouya.controller.OuyaController;
+	import io.arkeus.ouya.controller.Xbox360Controller;
+
 	/**
 	 * A class for reading input from controllers. Allows you to pull ready controllers from a queue
 	 * of controllers that have been initialized, to allow input from as many controllers as you need.
@@ -21,10 +21,10 @@ package Ouya{
 		public static var readyControllers:Vector.<GameController> = new Vector.<GameController>;
 		public static var removedControllers:Vector.<GameController> = new Vector.<GameController>;
 		private static var gameInput:GameInput;
-		
+
 		public static var now:uint = getTimer();
 		public static var previous:uint = now;
-		
+
 		/**
 		 * Initializes the library, adding event listeners as needed. The passed stage is used to add event
 		 * listeners for entering frame and for keyboard events.
@@ -35,15 +35,15 @@ package Ouya{
 			gameInput = new GameInput;
 			gameInput.addEventListener(GameInputEvent.DEVICE_ADDED, onDeviceAttached);
 			gameInput.addEventListener(GameInputEvent.DEVICE_REMOVED, onDeviceDetached);
-			
+
 			stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-			
+
 			for (var i:uint = 0; i < GameInput.numDevices; i++) {
 				attach(GameInput.getDeviceAt(i));
 			}
 		}
-		
+
 		/**
 		 * Returns the active controller with the passed index.
 		 * 
@@ -72,7 +72,7 @@ package Ouya{
 		public static function numReadyControllers():uint {
 			return readyControllers.length;
 		}
-		
+
 		/**
 		 * Returns whether or not there is a controller that is ready to be polled for input.
 		 * 
@@ -81,7 +81,7 @@ package Ouya{
 		public static function hasReadyController():Boolean {
 			return readyControllers.length > 0;
 		}
-		
+
 		/**
 		 * Returns a ready controller and activates it (allowing it to be polled for input). This moves the
 		 * controller from the "ready controllers" queue to the list of active "controllers".
@@ -94,7 +94,7 @@ package Ouya{
 			controllers.push(readyController);
 			return readyController;
 		}
-		
+
 		/**
 		 * Returns whether or not one of the currently used controllers has been disconnected. You can check this
 		 * queue in order to handle this case gracefully. Also, you can check if the "removed" property of the
@@ -106,7 +106,7 @@ package Ouya{
 		public static function hasRemovedController():Boolean {
 			return removedControllers.length > 0;
 		}
-		
+
 		/**
 		 * Similar to reading a newly ready controller, this allows you to read a removed controller and handle it
 		 * however you'd like.
@@ -118,7 +118,7 @@ package Ouya{
 			removedController.disable();
 			return removedController;
 		}
-		
+
 		/**
 		 * Callback when a device is attached.
 		 * 
@@ -127,7 +127,7 @@ package Ouya{
 		private static function onDeviceAttached(event:GameInputEvent):void {
 			attach(event.device);
 		}
-		
+
 		/**
 		 * Attaches a game device by creating a class that corresponds to the device type
 		 * and adding it to the ready controllers list.
@@ -143,7 +143,7 @@ package Ouya{
 			}
 			readyControllers.push(new controllerClass(device));
 		}
-		
+
 		/**
 		 * Callback when a device is detached.
 		 * 
@@ -152,7 +152,7 @@ package Ouya{
 		private static function onDeviceDetached(event:GameInputEvent):void {
 			detach(event.device);
 		}
-		
+
 		/**
 		 * Detaches a device by setting the removed attribute to true, removing it from the controllers
 		 * list, and adding to the removed controllers list.
@@ -168,7 +168,7 @@ package Ouya{
 			detachedController.remove();
 			removedControllers.push(detachedController);
 		}
-		
+
 		/**
 		 * Helper method that takes a group and a target device, removes the device from the group
 		 * and returns it. If the controller was not present in the group, returns null instead.
@@ -185,15 +185,15 @@ package Ouya{
 					break;
 				}
 			}
-			
+
 			if (result != null) {
 				source.splice(source.indexOf(result), 1);
 				return result;
 			}
-			
+
 			return null;
 		}
-		
+
 		/**
 		 * Sets up timers on enter frame in order to keep track of whether a button is pressed or held.
 		 * 
@@ -203,7 +203,7 @@ package Ouya{
 			previous = now;
 			now = getTimer();
 		}
-		
+
 		/**
 		 * Given the name of a device, returns the supported class for that device. If the device isn't
 		 * supported by AS3 Controller Input, returns null.
@@ -217,10 +217,10 @@ package Ouya{
 			} else if (name.toLowerCase().indexOf("ouya") != -1) {
 				return OuyaController;
 			}
-			
+
 			return null;
 		}
-		
+
 		/**
 		 * Callback for keyboard events that catches the back and escape keys such that stupid bindings
 		 * don't exit the application.

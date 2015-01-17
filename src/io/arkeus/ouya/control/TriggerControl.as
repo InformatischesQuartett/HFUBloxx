@@ -1,13 +1,13 @@
-package Ouya.Control {
+package io.arkeus.ouya.control {
 	import flash.ui.GameInputControl;
-	
-	import Ouya.Controller.GameController;
-	
+
+	import io.arkeus.ouya.controller.GameController;
+
 	public class TriggerControl extends ButtonControl {
 		public function TriggerControl(device:GameController, control:GameInputControl) {
 			super(device, control);
 		}
-		
+
 		public function get distance():Number {
 			return value;
 		}

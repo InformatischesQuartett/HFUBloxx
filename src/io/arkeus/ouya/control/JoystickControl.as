@@ -1,11 +1,11 @@
-package Ouya.Control {
+package io.arkeus.ouya.control {
 	import flash.ui.GameInputControl;
 	
-	import Ouya.Controller.GameController;
-	
+	import io.arkeus.ouya.controller.GameController;
+
 	public class JoystickControl extends ButtonControl {
 		private static const JOYSTICK_THRESHOLD:Number = 0.5;
-		
+
 		private var xAxis:GameControl;
 		private var yAxis:GameControl;
 		
