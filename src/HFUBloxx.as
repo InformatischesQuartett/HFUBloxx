@@ -11,9 +11,9 @@ package
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.system.Capabilities;
-	import flash.ui.Keyboard;
 	import flash.ui.GameInput;
 	import flash.ui.GameInputDevice;
+	import flash.ui.Keyboard;
 	
 	import Network.NetworkHandler;
 	
@@ -48,6 +48,7 @@ package
 		
 		private var camHandler : CamHandler;
 		private var netHandler : NetworkHandler;
+		private var xboxController : Xbox360Controller;
 		
 		private var curScreen : BloxxScreen;
 		
@@ -114,6 +115,8 @@ package
 			// adding the event listeners
 			mStarling.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeysDown);
 			mStarling.nativeStage.addEventListener(KeyboardEvent.KEY_UP, onKeysUp);
+			mStarling.nativeStage.addEventListener(flash.events.Event.ENTER_FRAME, onEnterFrame);
+			
 			
 			// init camera manager
 			camHandler = new CamHandler();
@@ -256,6 +259,22 @@ package
 			}
 		}
 		
+		private function onEnterFrame(e:flash.events.Event):void {
+			if(xboxController.a.pressed) {
+				trace('The A button'); 
+			}
+			
+			if(xboxController.b.pressed) {
+				trace('The B button'); 
+			}
+			
+			if(xboxController.y.pressed) {
+				trace('The Y button');				
+			}
+			if(xboxController.x.pressed) {
+				trace('The X button');				
+			}
+		}
 		/**
 		 * 
 		 * register coliders for collision checking
@@ -273,7 +292,7 @@ package
 				trace("GameInput is not supported!");
 			
 			var numDevices:uint;
-			trace(GameInput.numDevices);
+			
 			if ((numDevices = GameInput.numDevices) > 0)
 			{
 				var device:GameInputDevice;
@@ -291,7 +310,15 @@ package
 			
 			gameInput.addEventListener(GameInputEvent.DEVICE_ADDED,function handleDeviceAdded(e:GameInputEvent):void
 			{
-				trace("game input device added",e.device.name);				
+				trace("game input device added",e.device.name);
+				
+				trace(GameInput.numDevices);
+				ControllerInput.initialize(stage);
+				
+				if (ControllerInput.hasReadyController()) {
+					trace("Controller gefunden!");
+					xboxController = ControllerInput.getReadyController() as Xbox360Controller;
+				}
 			});
 			
 			gameInput.addEventListener(GameInputEvent.DEVICE_REMOVED,function handleDeviceRemovedEvent(e:GameInputEvent):void
