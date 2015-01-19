@@ -24,6 +24,7 @@ package
 	
 	import io.arkeus.ouya.ControllerInput;
 	import io.arkeus.ouya.controller.Xbox360Controller;
+	import Screens.MainMenu;
 	
 	import starling.core.Starling;
 	import starling.events.Event;
@@ -258,11 +259,19 @@ package
 			}
 		}
 		
+<<<<<<< HEAD
 		private function onEnterFrame(e:flash.events.Event): void {
 			
+=======
+		private function onEnterFrame(e:flash.events.Event):void {
+			
+			//Start the Game with "X" and "start"
+>>>>>>> ff7e7a2950c442ca2c918f9828e97fcf2afa3f91
 			if(xboxController.start.pressed || xboxController.x.pressed) {
+				loadScreen(MainGame);
 			}
 			
+			//Jump with "A" 
 			if(xboxController.a.pressed) {
 				up = true;			
 			} else {
@@ -270,29 +279,42 @@ package
 			}
 			
 			if(xboxController.b.pressed) {
+			
+			}
+			
+			if(xboxController.y.pressed) {
+				
+			}
+			
+			if(xboxController.dpad.right.held || xboxController.leftStick.right.held || xboxController.rightStick.right.held) {
 				right = true;			
-			} else {
+			} 
+			/*
+			else if (!xboxController.dpad.right.held && !xboxController.leftStick.right.held && !xboxController.rightStick.right.held) {
 				left = false;
 			}
-			
-			if(xboxController.dpad.right.held || xboxController.leftStick.right.held) {
-				right = true;			
-			} else if (!xboxController.dpad.right.held && !xboxController.leftStick.right.held) {
-				right = false;
-			}
-			
-			if(xboxController.dpad.left.held || xboxController.leftStick.left.held) {
+			*/
+			if(xboxController.dpad.left.held || xboxController.leftStick.left.held || xboxController.rightStick.left.held) {
 				left = true;			
-			} else if (!xboxController.dpad.left.held && !xboxController.leftStick.left.held) {
+			} 
+			
+			/*
+			else if (!xboxController.dpad.left.held && !xboxController.leftStick.left.held && !xboxController.rightStick.left.held) {
 				right = false;
 			}
-			
-			if(xboxController.dpad.up.held || xboxController.leftStick.up.held) {
+			*/
+			if(xboxController.dpad.up.held || xboxController.leftStick.up.held || xboxController.rightStick.up.held) {
 				up = true;			
-			} else if (!xboxController.dpad.up.held && !xboxController.leftStick.up.held) {
+			} else if (!xboxController.dpad.up.held && !xboxController.leftStick.up.held && !xboxController.rightStick.up.held) {
 				down = false;
 			}
 			
+			if (!(xboxController.dpad.left.held || xboxController.leftStick.left.held || xboxController.rightStick.left.held)
+				&& !(xboxController.dpad.right.held || xboxController.leftStick.right.held || xboxController.rightStick.right.held)
+					){
+				left = false;
+				right = false;
+			}
 		}
 
 		/**
