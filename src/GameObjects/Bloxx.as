@@ -25,11 +25,16 @@ package GameObjects {
 			bloxxImage.height = (HFUBloxx.screenHeight) / MainGame.getRowCount(); 
 			
 			//position
-			bloxxImage.x = posX * bloxxImage.width ;
-			bloxxImage.y = posY * bloxxImage.height;
+			//bloxxImage.x = posX * bloxxImage.width ;
+			//bloxxImage.y = posY * bloxxImage.height;
+			
 			
 			//adds Image to this stage
 			this.addChild(bloxxImage);
+			
+			this.x = posX * bloxxImage.width ;
+			this.y = posY * bloxxImage.height ;
+			
 			HFUBloxx.registerWallCollider(this);
 		}
 	}
