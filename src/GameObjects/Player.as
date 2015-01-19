@@ -3,6 +3,7 @@ package GameObjects {
 	//import HFUBloxx;
 	
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	
 	import Screens.MainGame;
 	
@@ -22,6 +23,8 @@ package GameObjects {
 		private var jumpSpeed : int = 10;
 		private var isJumping : Boolean = false;
 		
+		//define new Rectangle that defines the feetcollider of the player
+		private var playerFeetCollider : Rectangle;
 		//image
 		private var playerImage : Image;
 		
@@ -57,7 +60,11 @@ package GameObjects {
 			gameBorderRight = (MainGame.backgroundGame.width/2 ) - (this.width/2) -10;
 			gameBorderLeft = -(MainGame.backgroundGame.width/2) + (this.width/2) + 10; 
 			
+			
+			playerFeetCollider = new Rectangle (this.x, (this.y/3) *2, playerImage.width * 0.80, playerImage.height * 0.20);  
 			trace("player spawned " + playerImage.x + playerImage);
+			
+			
 		}//constructor end
 		
 		/**
@@ -78,6 +85,7 @@ package GameObjects {
 			if (HFUBloxx.up)
 				playerMove("up");
 			
+			trace(playerFeetCollider);
 		}//end update method
 		
 		/**
@@ -85,7 +93,7 @@ package GameObjects {
 		 **/ 
 		public function checkCollision() : void {
 			//MainGame.testHat.setRemoveMe();
-			for each (var oCollider : Object in HFUBloxx.colliderArray) {
+			for each (var oCollider : Object in HFUBloxx.itemColliderArray) {
 				if (this.getBounds(this.parent).intersects(oCollider.getBounds(MainGame.testHat.parent)))
 				{
 					//trace("collision");
@@ -143,6 +151,20 @@ package GameObjects {
 			if (this.y == 0) {
 				isJumping = false;
 				forceFall = 0;
+			}
+			
+			/*Run through wall array and check for collision*/
+			for each (var aCollider : Object in HFUBloxx.wallColliderArray) {
+				if (this.getBounds(this.parent).intersects(aCollider.getBounds(aCollider.parent))) {
+					//trace("I am hitting" + aCollider);
+					//this.y-=1;
+				}
+				
+				
+				while (this.getBounds(this.parent).intersects(aCollider.getBounds(aCollider.parent)))
+				{
+					//this.y-=0.4;
+				}
 			}
 		}
 		

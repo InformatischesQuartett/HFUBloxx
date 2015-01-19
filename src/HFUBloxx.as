@@ -71,8 +71,9 @@ package
 		
 		private var keysDown:Array = new Array(256);
 		
-		//Array of colider references
-		public static var colliderArray : Array = new Array();
+		//Array of collider references
+		public static var itemColliderArray : Array = new Array();
+		public static var wallColliderArray : Array = new Array();
 		
 		public function HFUBloxx() {		
 			//loading external data
@@ -257,7 +258,8 @@ package
 			}
 		}
 		
-		private function onEnterFrame(e:flash.events.Event):void {
+		private function onEnterFrame(e:flash.events.Event): void {
+			
 			if(xboxController.start.pressed || xboxController.x.pressed) {
 			}
 			
@@ -297,11 +299,15 @@ package
 		 * 
 		 * register coliders for collision checking
 		 * */
-		public static function registerCollider(aObject:Object) : void{
-			colliderArray.push(aObject); 	
+		public static function registerItemCollider(aObject:Object) : void{
+			itemColliderArray.push(aObject); 	
 			trace(aObject);
 		}
 		
+		public static function registerWallCollider(aObject:Object) : void{
+			wallColliderArray.push(aObject); 	
+			trace(aObject);
+		}
 		public function GameControllerXbox()
 		{
 			if(GameInput.isSupported)

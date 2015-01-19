@@ -158,12 +158,7 @@ package Screens {
 			}			
 		}
 		
-		
-		
-		
-		public function registerWallAsColliders() : void{
-		}
-		
+
 		/**
 		 * Spawn Players.
 		 **/
@@ -173,24 +168,29 @@ package Screens {
 		}
 		
 		public function update(_event : Event) : void{
-			checkColliderState();
+			checkItemColliderState();
 		}
 		
-		public function checkColliderState() : void{
+		/**
+		 * checks if Item (the Hats) is set to remove me and remove it respectively
+		 **/
+		public function checkItemColliderState() : void{
 			// control variable for Array Elements
 			var counter : int = 0;
 			
-			for each (var aCollider:* in HFUBloxx.colliderArray){
+			// check colliders for type and handle them differently
+			for each (var aCollider:* in HFUBloxx.itemColliderArray){
 				if(aCollider.removeMe == true){
 					this.removeChild(aCollider);
 					trace("remove Me");
 					
 					//remove the counter th Element from the Array (the 1 indicates: only 1 Element)
-					HFUBloxx.colliderArray.splice(counter, 1);
+					HFUBloxx.itemColliderArray.splice(counter, 1);
 				}
 				counter++;
 			}
 		}
+		
 		
 	}
 }

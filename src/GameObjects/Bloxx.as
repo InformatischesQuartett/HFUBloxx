@@ -30,6 +30,7 @@ package GameObjects {
 			
 			//adds Image to this stage
 			this.addChild(bloxxImage);
+			HFUBloxx.registerWallCollider(this);
 		}
 	}
 }

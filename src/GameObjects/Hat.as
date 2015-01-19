@@ -22,7 +22,7 @@ package GameObjects
 			hatImage.x = (HFUBloxx.screenWidth/3);
 			hatImage.y = (HFUBloxx.screenHeight - hatImage.height)- HFUBloxx.borderSize;
 			this.addChild(hatImage);
-			HFUBloxx.registerCollider(this);
+			HFUBloxx.registerItemCollider(this);
 		}
 		
 		/**
