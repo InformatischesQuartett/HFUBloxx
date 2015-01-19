@@ -327,7 +327,7 @@ package
 			wallColliderArray.push(aObject); 	
 			trace(aObject);
 		}
-		public function GameControllerXbox()
+		public function GameControllerXbox():void
 		{
 			if(GameInput.isSupported)
 				trace("GameInput is supported! moving on...");
