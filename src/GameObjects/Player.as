@@ -3,6 +3,7 @@ package GameObjects {
 	//import HFUBloxx;
 	
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import Screens.MainGame;
@@ -84,8 +85,7 @@ package GameObjects {
 			
 			if (HFUBloxx.up)
 				playerMove("up");
-			
-			trace(playerFeetCollider);
+
 		}//end update method
 		
 		/**
@@ -154,16 +154,23 @@ package GameObjects {
 			}
 			
 			/*Run through wall array and check for collision*/
-			for each (var aCollider : Object in HFUBloxx.wallColliderArray) {
-				if (this.getBounds(this.parent).intersects(aCollider.getBounds(aCollider.parent))) {
-					//trace("I am hitting" + aCollider);
-					//this.y-=1;
-				}
-				
-				
-				while (this.getBounds(this.parent).intersects(aCollider.getBounds(aCollider.parent)))
-				{
-					//this.y-=0.4;
+			for each (var aCollider : Object in HFUBloxx.wallColliderArray) {				
+				while (this.getBounds(this.parent).intersects(aCollider.getBounds(aCollider.parent))) {
+					//get aColliders topleft and topright corners
+					var wallTopLeftCorner : Point = aCollider.getBounds(aCollider.parent).topLeft;
+					var wallTopRightCorner : Point = new Point(wallTopLeftCorner.x + aCollider.getBounds(aCollider.parent).width, wallTopLeftCorner.y);
+					var playerBottomRightCorner : Point = this.getBounds(this.parent).bottomRight;
+					var playerBottomLeftCorner : Point = new Point (playerBottomRightCorner.x - this.getBounds(this.parent).width, playerBottomRightCorner.y);
+					
+					/*Check if PLayer is vertically && horizontally above a wall segment*/
+					if ((playerBottomRightCorner.y > wallTopLeftCorner.y) 
+					&& ((playerBottomLeftCorner.x > wallTopLeftCorner.x && playerBottomLeftCorner.x < wallTopRightCorner.x)
+						|| (playerBottomRightCorner.x > wallTopLeftCorner.x && playerBottomRightCorner.x < wallTopRightCorner.x) )) {
+						this.y -= 0.4;
+							trace("PLayer is above a wall");
+					} else {
+						trace("PLayer is next to a wall");
+					}
 				}
 			}
 		}

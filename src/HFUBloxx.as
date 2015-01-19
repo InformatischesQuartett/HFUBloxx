@@ -104,6 +104,7 @@ package
 			//start game engine
 			mStarling = new Starling(MainMenu, stage);
 			
+			
 			mStarling.addEventListener(starling.events.Event.ROOT_CREATED, function():void
 			{
 				initStarling();
@@ -117,7 +118,7 @@ package
 			// adding the event listeners
 			mStarling.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeysDown);
 			mStarling.nativeStage.addEventListener(KeyboardEvent.KEY_UP, onKeysUp);
-			mStarling.nativeStage.addEventListener(flash.events.Event.ENTER_FRAME, onEnterFrame);
+					
 			
 			
 			// init camera manager
@@ -259,14 +260,10 @@ package
 			}
 		}
 		
-<<<<<<< HEAD
-		private function onEnterFrame(e:flash.events.Event): void {
-			
-=======
+
 		private function onEnterFrame(e:flash.events.Event):void {
-			
+		
 			//Start the Game with "X" and "start"
->>>>>>> ff7e7a2950c442ca2c918f9828e97fcf2afa3f91
 			if(xboxController.start.pressed || xboxController.x.pressed) {
 				loadScreen(MainGame);
 			}
@@ -364,6 +361,9 @@ package
 				if (ControllerInput.hasReadyController()) {
 					trace("Xbox Controller gefunden!");
 					xboxController = ControllerInput.getReadyController() as Xbox360Controller;
+					if (xboxController != null){
+						mStarling.nativeStage.addEventListener(flash.events.Event.ENTER_FRAME, onEnterFrame);
+					}
 				}
 			});
 			
