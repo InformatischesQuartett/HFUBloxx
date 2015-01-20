@@ -1,5 +1,7 @@
 package GameObjects
 {
+	import Screens.MainGame;
+	
 	import starling.display.Image;
 	import starling.display.Sprite;
 
@@ -7,21 +9,24 @@ package GameObjects
 	{
 		private var hatImage : Image;
 		public var removeMe : Boolean;
+		public var colorAttribute : String;
 		
 		
 		/**
 		 * Constructor Hat
 		 **/ 
-		public function Hat()
+		public function Hat(hatColor : String, posX : int, posY : int)
 		{	
 			removeMe = false;
-			hatImage = new Image(Assets.getTexture("hat_Green"));
-			hatImage.height = HFUBloxx.playerSize *  0.7; // 70%
-			hatImage.width = HFUBloxx.playerSize * 1.2;
+			hatImage = new Image(Assets.getTexture("hat_" + hatColor));
+			hatImage.height = HFUBloxx.playerSize *  0.9; // 70%
+			hatImage.width = HFUBloxx.playerSize * 1.5;
 			
-			hatImage.x = (HFUBloxx.screenWidth/3);
-			hatImage.y = (HFUBloxx.screenHeight - hatImage.height)- HFUBloxx.borderSize;
+			this.x = posX * ((HFUBloxx.screenWidth/2) / MainGame.getColumnCount()) - 5;
+			this.y = posY * ((HFUBloxx.screenHeight) / MainGame.getRowCount())  + 20;
 			this.addChild(hatImage);
+			colorAttribute = hatColor;
+			
 			HFUBloxx.registerItemCollider(this);
 		}
 		

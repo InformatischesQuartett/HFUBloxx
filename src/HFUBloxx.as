@@ -19,18 +19,18 @@ package
 	import Screens.BloxxScreen;
 	import Screens.MainGame;
 	import Screens.MainMenu;
+	import Screens.GameOver;
 	
 	import Webcam.CamHandler;
 	
 	import io.arkeus.ouya.ControllerInput;
 	import io.arkeus.ouya.controller.Xbox360Controller;
-	import Screens.MainMenu;
 	
 	import starling.core.Starling;
 	import starling.events.Event;
 	
 	//settings
-	[SWF(frameRate="60", width="800", height="600")]
+	[SWF(frameRate="60", width="1920", height="1080")]
 	
 	/**
 	 This is the main document class of the game HFUBloxx.
@@ -47,7 +47,7 @@ package
 		private var mStarling : Starling;
 		
 		private var camHandler : CamHandler;
-		private var netHandler : NetworkHandler;
+		public static var netHandler : NetworkHandler;
 		private var xboxController : Xbox360Controller;
 		
 		private var curScreen : BloxxScreen;
@@ -76,6 +76,8 @@ package
 		public static var itemColliderArray : Array = new Array();
 		public static var wallColliderArray : Array = new Array();
 		
+		public static var gameOver : Boolean = false;
+		
 		public function HFUBloxx() {		
 			//loading external data
 			loadData();
@@ -83,13 +85,15 @@ package
 			//start GameController
 			GameControllerXbox();
 			/*Game Configuration --> put these parameters in an external file*/
-			//defines the image size of the ghost avatar
-			playerSize = 40;
+			
 			//describes the size of the black border stroke from the gamescreen
 			borderSize = 20;
 			//set the screen resolution
-			screenWidth = 800; //int(xmlContent.Display.gameWidth.@gw);//800; //Capabilities.screenResolutionX;
-			screenHeight = 600; //Capabilities.screenResolutionY;
+			screenWidth = 1920;//800; //int(xmlContent.Display.gameWidth.@gw);//800; //Capabilities.screenResolutionX;
+			screenHeight = 1080; // 600; //Capabilities.screenResolutionY;
+			
+			//defines the image size of the ghost avatar
+			playerSize = screenHeight / 15;
 			
 			/*
 			ControllerInput.initialize(stage);
@@ -164,10 +168,15 @@ package
 				case MainGame:
 				{
 					camHandler.setLocalVisibility(false);
-					camHandler.setRemoteImage(new Rectangle(505, 375, 200, 200));
+					camHandler.setRemoteImage(new Rectangle((screenWidth * 0.75), (screenHeight * 0.6), 400, 400));
 					
 					break;
 				}
+				case GameOver:
+					camHandler.setLocalVisibility(true);
+					camHandler.setRemoteImage(new Rectangle(210, 30, 200, 200));
+					
+					break;
 			}
 		}
 		
@@ -263,8 +272,14 @@ package
 
 		private function onEnterFrame(e:flash.events.Event):void {
 		
+			if (gameOver) {
+				loadScreen(GameOver);
+				gameOver = false;
+			}
+			
+			
 			//Start the Game with "X" and "start"
-			if(xboxController.start.pressed || xboxController.x.pressed) {
+			if((xboxController.start.pressed || xboxController.x.pressed)) {
 				loadScreen(MainGame);
 			}
 			
@@ -276,7 +291,7 @@ package
 			}
 			
 			if(xboxController.b.pressed) {
-			
+				loadScreen(MainGame);
 			}
 			
 			if(xboxController.y.pressed) {

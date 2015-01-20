@@ -22,18 +22,14 @@ package Screens
 			this.addChild(bg);
 			
 			var playButton : Button = new Button(Assets.getTexture("play_Button"));
-			playButton.x = HFUBloxx.screenWidth/3;
-			playButton.y = 250;
+			playButton.scaleX = 0.7;
+			playButton.scaleY = 0.7;
+			playButton.x = HFUBloxx.screenWidth * 0.55;
+			playButton.y = HFUBloxx.screenHeight * 0.45;
 			this.addChild(playButton);
 			playButton.addEventListener(Event.TRIGGERED, plyBtn_onClick);
 			
-			var scoreButton : Button = new Button(Assets.getTexture("y_Button"));
-			scoreButton.width = 100;
-			scoreButton.height = 100;
-			scoreButton.x = (playButton.x + playButton.width) + 10;
-			scoreButton.y = (playButton.y);
-			this.addChild(scoreButton);
-			scoreButton.addEventListener(Event.TRIGGERED, userScore_onClick);
+			
 			
 			/*
 			var logo:Image = new Image(Assets.getTextue("logo"));

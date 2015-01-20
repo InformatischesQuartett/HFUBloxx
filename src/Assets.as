@@ -63,14 +63,23 @@
 		public static const bloxx_White:Class;
 		
 		// Pipes
-		[Embed(source="../assets/textures/pipe_yellow.png")]
-		public static const pipe_Yellow:Class;
+		[Embed(source="../assets/textures/pipe_blue.png")]
+		public static const pipe_Blue:Class;
+		
+		[Embed(source="../assets/textures/pipe_green.png")]
+		public static const pipe_Green:Class;
+		
+		[Embed(source="../assets/textures/pipe_orange.png")]
+		public static const pipe_Orange:Class;
+		
+		[Embed(source="../assets/textures/pipe_pink.png")]
+		public static const pipe_Pink:Class;
 		
 		[Embed(source="../assets/textures/pipe_red.png")]
 		public static const pipe_Red:Class;
 		
-		[Embed(source="../assets/textures/pipe_orange.png")]
-		public static const pipe_Orange:Class;
+		[Embed(source="../assets/textures/pipe_yellow.png")]
+		public static const pipe_Yellow:Class;
 		
 		// Hüte
 		
@@ -80,8 +89,14 @@
 		[Embed(source="../assets/textures/hat_green.png")]
 		public static const hat_Green:Class;
 		
+		[Embed(source="../assets/textures/hat_orange.png")]
+		public static const hat_Orange:Class;
+		
 		[Embed(source="../assets/textures/hat_pink.png")]
 		public static const hat_Pink:Class;
+		
+		[Embed(source="../assets/textures/hat_red.png")]
+		public static const hat_Red:Class;
 		
 		[Embed(source="../assets/textures/hat_yellow.png")]
 		public static const hat_Yellow:Class;
@@ -91,6 +106,9 @@
 		
 		[Embed(source="../assets/textures/person.jpg")]
 		public static const misc_Person:Class;		
+		
+		[Embed(source="../assets/textures/font_game_over.png")]
+		public static const gameover:Class;
 		
 		
 		/*

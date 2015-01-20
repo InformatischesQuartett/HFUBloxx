@@ -20,9 +20,11 @@ package GameObjects {
 	public class Player extends Sprite {
 		
 		//walking speed --> set in an external xml file
-		private var walkSpeed : int = 4; // = int(HFUBloxx.xmlContent.Player.playerSpeed.@ps);
-		private var jumpSpeed : int = 10;
+		private var walkSpeed : int = 6; // = int(HFUBloxx.xmlContent.Player.playerSpeed.@ps);
+		private var jumpSpeed : int = 15;
 		private var isJumping : Boolean = false;
+		
+		public var playerLife : int = 1;
 		
 		//define new Rectangle that defines the feetcollider of the player
 		private var playerFeetCollider : Sprite;
@@ -73,9 +75,9 @@ package GameObjects {
 			playerFeetCollider.addChild(feetColliderImage);
 			
 			playerFeetCollider.width = playerImage.width;
-			playerFeetCollider.height = playerImage.height * 0.3;
+			playerFeetCollider.height = playerImage.height * 0.2;
 			playerFeetCollider.x = playerImage.x;
-			playerFeetCollider.y = playerImage.y * 1.05;
+			playerFeetCollider.y = playerImage.y * 1.06;//1.05;
 			feetColliderImage.alpha = 0;
 			//add Collider to this stage
 			this.addChild(playerFeetCollider);
@@ -83,9 +85,9 @@ package GameObjects {
 			playerHeadCollider.addChild(headColliderImage);
 			
 			playerHeadCollider.width = playerImage.width;
-			playerHeadCollider.height = playerImage.height * 0.3;
+			playerHeadCollider.height = playerImage.height* 0.7;
 			playerHeadCollider.x = playerImage.x;
-			playerHeadCollider.y = playerImage.y;//* 1.05;
+			playerHeadCollider.y = playerImage.y;
 			headColliderImage.alpha = 0;
 			//add Collider to this stage
 			this.addChild(playerHeadCollider);
@@ -129,9 +131,13 @@ package GameObjects {
 		public function checkCollision() : void {
 			//MainGame.testHat.setRemoveMe();
 			for each (var oCollider : Object in HFUBloxx.itemColliderArray) {
-				if (this.getBounds(this.parent).intersects(oCollider.getBounds(MainGame.testHat.parent)))
+				if (this.getBounds(this.parent).intersects(oCollider.getBounds(oCollider.parent)))
 				{
 					//trace("collision");
+					if ((oCollider as Hat).colorAttribute == MainGame.currentPipe.colorAttribute) {
+						MainGame.currentPipe.setRemoveMe(true);
+						trace("same color");
+					}
 					oCollider.setRemoveMe(true);
 				}
 			}
@@ -198,42 +204,23 @@ package GameObjects {
 				
 				if (headHit && feetHit ) {
 					/*Ran against wall with whole body including feet*/
-					trace ("Ran against wall");
+					
 				} else if (feetHit && !headHit) {
 					/*Jump on wall*/
-					trace ("Jump on wall");
+					
 					while (feetHit) {
-						this.y -= 0.6;
+						this.y -= 0.5;
 						feetHit = playerFeetCollider.getBounds(this.parent).intersects(aCollider.getBounds(this.parent));
 						
 					}
 					forceFall = 0; //setting back force fall
 					isJumping = false; //again on a Bloxx or the floor
 				}
-				
-				
-				
-				//playerHeadCollider = new Rectangle (
-				/*
-				while (this.getBounds(this.parent).intersects(aCollider.getBounds(aCollider.parent))) {
-					//get aColliders topleft and topright corners
-					var wallTopLeftCorner : Point = aCollider.getBounds(aCollider.parent).topLeft;
-					var wallTopRightCorner : Point = new Point(wallTopLeftCorner.x + aCollider.getBounds(aCollider.parent).width, wallTopLeftCorner.y);
-					var playerBottomRightCorner : Point = this.getBounds(this.parent).bottomRight;
-					var playerBottomLeftCorner : Point = new Point (playerBottomRightCorner.x - this.getBounds(this.parent).width, playerBottomRightCorner.y);
-				*/	
-					
-					/*Check if PLayer is vertically && horizontally above a wall segment*/
-					/*if ((playerBottomRightCorner.y < wallTopLeftCorner.y) 
-					&& ((playerBottomLeftCorner.x > wallTopLeftCorner.x && playerBottomLeftCorner.x < wallTopRightCorner.x)
-						|| (playerBottomRightCorner.x > wallTopLeftCorner.x && playerBottomRightCorner.x < wallTopRightCorner.x) )) {
-						this.y -= 0.4;
-							//trace("PLayer is above a wall");
-					} else {
-						//trace("PLayer is next to a wall");
-					}
-				}*/
 			} //end for each
+		}
+		
+		public function setPlayerLife(number : int) : void{
+			playerLife += number;
 		}
 		
 	} //class end

@@ -1,29 +1,40 @@
 package Screens {
 
 	import flash.events.Event;
+	import starling.text.TextField;
 	
 	import GameObjects.Bloxx;
 	import GameObjects.Hat;
+	import GameObjects.Pipe;
 	import GameObjects.Player;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
 	
+	
 	public class MainGame extends BloxxScreen {
 		
 		/*Game Variables */
-		private var colorBloxxArray : Array;
-		private var colorHatPipeArray : Array;
+		//private var colorBloxxArray : Array;
+		private var colorArray : Array;
 		private var colorPlayerArray : Array;
+		
+		public static var currentPipe : Pipe;
 		
 		private var gameScore : int = 0;
 		
 		private var playerOne : Player;
 		private var playerTwo : Player;
 		
+		/*How many Hats are in the game at the same time*/
+		private var hatCount : int = 4;
+		
 		public static var backgroundGame : Image;
 		
-		public static var testHat : Hat;
+		private var  textField : TextField;
+	
+		
+		public static var pipeCount : int;
 		
 		// Mapgrids
 		
@@ -49,9 +60,8 @@ package Screens {
 			trace("Starting MainGame");
 			
 			//initialize color-choice arrays, the strings are the same as in the Assets.as file
-			colorBloxxArray = new Array("blue", "gray", "lightGreen", "darkGreen", "lilac", "orange", "red", "turquoise", "yellow");
 		
-			colorHatPipeArray = new Array("green", "pink", "yellow", "blue");
+			colorArray = new Array("Blue", "Green", "Orange", "Pink", "Red", "Yellow");
 			
 			colorPlayerArray = new Array("avatar_Yellow", "avatar_Voilet", "avatar_Red", "avatar_Green");
 			
@@ -78,14 +88,21 @@ package Screens {
 			backgroundGame.height = HFUBloxx.screenHeight;
 			this.addChild(backgroundGame);
 			
-			chooseBloxxPos();
+			//chooseBloxxPos();
+			FillGrid();
 			drawBloxx();
 			
+			
 			//spawns player and adds him to main stage
-			testHat = new Hat();
-			this.addChild(testHat);
 			this.addChild(spawnPlayers());
 			
+			for (var k : int = 0; k < hatCount; k++) {
+				spawnHat();
+			}
+			
+			drawGUI ();
+			
+			pipeCount = 0;
 		
 		}//end constructor
 		
@@ -107,14 +124,9 @@ package Screens {
 		 * returns either 1 or 0
 		 * for certain random processes
 		 **/
-		public function randomize () : int {
-			var aNumber : Number = Math.random();
-			if(aNumber < 0.5){
-				aNumber = 0;
-			}else{
-				aNumber = 1;
-			}
-			return int(aNumber);
+		public function randomize (upperBound : int) : int {
+			var aNumber : Number =(((Math.random() * 100))  % (upperBound +1)) ;
+				return int(aNumber) ;
 		}
 		
 		/**
@@ -124,23 +136,26 @@ package Screens {
 //			return aNumber;
 //		}
 		
-		
-		/**
-		 * Randomly chooses the position of the bloxx
-		 */
-		public function chooseBloxxPos() : void{
-			for(var i : int = 0; i < rowCount; i++){
-				for(var j : int = 0; j < columnCount; j++){
-					var temp : int = randomize();
-					if(temp == 1){
-						gridArray[i][j] = true; 
-					}else{
-						gridArray[i][j] = false;
-					}
+		public function FillGrid() : void{
+			for (var i : int = 0; i < rowCount; i++) {
+				var blockscreated : int = 0;
+				if ((i%2 != 0 || i == 0)) {
+					//Debug.Log("i = " + i +" continuing");
+					continue;
+				}
+				var blocksToCreate : int = randomize(2) +2;
+				while (blockscreated < blocksToCreate) {
+					var xPos : int = randomize(5);
+					if (gridArray[i][xPos] == false){
+						gridArray[i][xPos] = true;
+						blockscreated++;
+					}    
 				}
 			}
-			trace(gridArray);
+			
 		}
+		
+		
 		
 		/**
 		 * Draws the bloxx
@@ -158,17 +173,23 @@ package Screens {
 			}			
 		}
 		
-
 		/**
-		 * Spawn Players.
+		 * Game Loop
 		 **/
-		public function spawnPlayers() : Player {
-			playerOne = new Player("avatar_Yellow");
-			return playerOne;
-		}
-		
 		public function update(_event : Event) : void{
 			checkItemColliderState();
+			
+			if (currentPipe == null) {
+				spawnPipe();
+			}
+			if (currentPipe.removeMe) {
+				spawnPipe();
+			}
+			
+			checkPipeState ();
+			checkPlayerState();
+			
+			textField.text = playerOne.playerLife.toString();
 		}
 		
 		/**
@@ -182,6 +203,7 @@ package Screens {
 			for each (var aCollider:* in HFUBloxx.itemColliderArray){
 				if(aCollider.removeMe == true){
 					this.removeChild(aCollider);
+					spawnHat();
 					trace("remove Me");
 					
 					//remove the counter th Element from the Array (the 1 indicates: only 1 Element)
@@ -191,6 +213,74 @@ package Screens {
 			}
 		}
 		
+		/**
+		 * Spawns a Pipe
+		 **/
+		public function spawnPipe() : void {
+			var tempNo : int = randomize(colorArray.length - 1);
+			currentPipe = new Pipe(colorArray[tempNo], pipeCount);
+			this.addChild(currentPipe);
+			pipeCount++;
+		}
+		
+		/**
+		 * Checks if Pipe hits Ground. If so --> delete it. Spawn next Pipe and reduce PlayerLife.
+		 **/
+		public function checkPipeState () : void {
+			if (currentPipe.y >= (HFUBloxx.screenHeight - HFUBloxx.borderSize ) ) {
+				currentPipe.setRemoveMe(true);
+				playerOne.setPlayerLife(-1);
+			}
+			//remove pipe from game
+			if (currentPipe.removeMe) {
+				this.removeChild(currentPipe);
+				spawnPipe();
+			}
+		}
+		
+		
+		/**
+		 * Checks if Game is over.
+		 **/
+		public function checkPlayerState () : void {
+			if (playerOne.playerLife <= 0) {
+				HFUBloxx.gameOver = true; 
+			}
+		}
+		
+		/**
+		 * Spawn Players.
+		 **/
+		public function spawnPlayers() : Player {
+			playerOne = new Player("avatar_Yellow");
+			return playerOne;
+		}
+		
+		public function spawnHat() : void {
+				var xPos: int = randomize(columnCount -1);
+				var yPos : int = randomize(rowCount -2);
+				var tempNo : int = randomize(colorArray.length - 1);
+				this.addChild(new Hat(colorArray[tempNo], xPos, yPos));
+				
+		}
+		
+		private function drawGUI () : void {
+			var heartImg : Image = new Image(Assets.getTexture("herz_Button"));
+			heartImg.x = (HFUBloxx.screenWidth * 0.52);
+			heartImg.y = HFUBloxx.screenHeight * 0.05;
+			heartImg.scaleX = 0.2;
+			heartImg.scaleY = 0.2;
+			this.addChild(heartImg);
+			
+			textField  = new TextField(HFUBloxx.screenWidth * 0.1, HFUBloxx.screenHeight * 0.1, playerOne.playerLife.toString()  );
+			textField.fontSize = 40;
+			textField.color = (0xffffff);
+			textField.x = heartImg.x + heartImg.width;
+			textField.y = HFUBloxx.screenHeight * 0.04 ;
+			
+			this.addChild(textField);
+			
+		}		
 		
 	}
 }
