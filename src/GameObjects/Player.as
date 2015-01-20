@@ -5,6 +5,9 @@ package GameObjects {
 	//import flash.display.DisplayObject;
 	
 	import flash.events.Event;
+	import flash.media.Sound;
+	import flash.media.SoundChannel;
+	import flash.net.URLRequest;
 	
 	import Screens.MainGame;
 	
@@ -41,6 +44,9 @@ package GameObjects {
 		
 		private var gameBorderRight:Number;
 		private var gameBorderLeft:Number;
+		
+		public var jumpSound:Sound = new Sound();
+		public var jumpChannel:SoundChannel = new SoundChannel();
 		
 		/**
 		 * Constructor
@@ -121,6 +127,10 @@ package GameObjects {
 			if (HFUBloxx.up)
 				playerMove("up");
 			
+			//if(isJumping == true){
+				//jumpChannel = jumpSound.play();
+			//}
+			
 			//trace(playerFeetCollider.getBounds(playerFeetCollider.parent.parent));
 			
 		}//end update method
@@ -149,10 +159,11 @@ package GameObjects {
 		 **/
 		public function playerMove(directions : String) : void {
 			var tempX: int;
-			
+			//jumpSound.load(new URLRequest("jumping.mp3"));
+						
 			switch (directions) {
 				case "left":
-					tempX = this.x - walkSpeed;
+					tempX = this.x - walkSpeed;					
 					break;
 				
 				case "right":
@@ -162,7 +173,7 @@ package GameObjects {
 				case "up":
 					if (!isJumping) {
 						forceFall = -jumpSpeed;
-						isJumping = true;
+						isJumping = true;						
 					}
 					break;
 				
