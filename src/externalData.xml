@@ -1,11 +1,14 @@
 <Config>
+	<General>
+		<location>Schwenningen</location>
+	</General>
 	<Display>
-		<gameHeight gh="600"/>
-		<gameWidth gw="800"/>
-		<playerSize ps="4"/>
-		<borderSize bs="4"/>
+		<gameHeight>1080</gameHeight>
+		<gameWidth>1920</gameWidth>
+		<playerSize>4</playerSize>
+		<borderSize>4</borderSize>
 	</Display>
 	<Player>
-		<playerSpeed sp="4"/>
+		<playerSpeed>4</playerSpeed>
 	</Player>
 </Config>

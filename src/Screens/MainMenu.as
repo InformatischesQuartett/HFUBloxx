@@ -8,10 +8,7 @@ package Screens
 	import flash.media.SoundChannel;
 	
 	public class MainMenu extends BloxxScreen
-	{	
-		public var gameSound:Sound = new Sound();
-		public var gameChannel:SoundChannel = new SoundChannel();
-		
+	{		
 		public function MainMenu()
 		{
 			super();
@@ -63,15 +60,7 @@ package Screens
 		 **/
 		public function plyBtn_onClick(event:Event):void
 		{			
-			gameSound.load(new URLRequest("gameSound.mp3"));
-			
 			gameHandler.loadScreen(MainGame)
-			gameChannel = gameSound.play();
-		}
-		
-		public function userScore_onClick(event:Event):void
-		{
-			netHandler.sendMessage("msg", "this is a test");
 		}
 	}
 }

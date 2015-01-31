@@ -17,9 +17,9 @@ package
 	import Network.NetworkHandler;
 	
 	import Screens.BloxxScreen;
+	import Screens.GameOver;
 	import Screens.MainGame;
 	import Screens.MainMenu;
-	import Screens.GameOver;
 	
 	import Webcam.CamHandler;
 	
@@ -75,13 +75,12 @@ package
 		//Array of collider references
 		public static var itemColliderArray : Array = new Array();
 		public static var wallColliderArray : Array = new Array();
-		
-		public static var gameOver : Boolean = false;
-		
+				
 		public function HFUBloxx() {		
-			//loading external data
 			loadData();
-			
+		} 
+		
+		private function initHFUBloxx():void {
 			//start GameController
 			GameControllerXbox();
 			/*Game Configuration --> put these parameters in an external file*/
@@ -89,8 +88,8 @@ package
 			//describes the size of the black border stroke from the gamescreen
 			borderSize = 20;
 			//set the screen resolution
-			screenWidth = 1920;//800; //int(xmlContent.Display.gameWidth.@gw);//800; //Capabilities.screenResolutionX;
-			screenHeight = 1080; // 600; //Capabilities.screenResolutionY;
+			screenWidth = xmlContent.Display.gameWidth;//800; //int(xmlContent.Display.gameWidth.@gw);//800; //Capabilities.screenResolutionX;
+			screenHeight = xmlContent.Display.gameHeight; // 600; //Capabilities.screenResolutionY;
 			
 			//defines the image size of the ghost avatar
 			playerSize = screenHeight / 15;
@@ -99,8 +98,8 @@ package
 			ControllerInput.initialize(stage);
 			
 			if (ControllerInput.hasReadyController()) {
-				trace("Controller gefunden!");
-				var xboxController = ControllerInput.getReadyController() as Xbox360Controller;
+			trace("Controller gefunden!");
+			var xboxController = ControllerInput.getReadyController() as Xbox360Controller;
 			}
 			
 			*/
@@ -115,15 +114,13 @@ package
 			});
 			
 			mStarling.start();
-		} // end of constructor
+		}
 		
 		private function initStarling(): void
 		{
 			// adding the event listeners
 			mStarling.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeysDown);
 			mStarling.nativeStage.addEventListener(KeyboardEvent.KEY_UP, onKeysUp);
-					
-			
 			
 			// init camera manager
 			camHandler = new CamHandler();
@@ -140,6 +137,8 @@ package
 			// start network manager
 			netHandler = new NetworkHandler();
 			netHandler.setCamHandler(camHandler);
+			netHandler.setGameHandler(this);
+			
 			mStarling.stage.addChild(netHandler);
 			
 			// set root handler
@@ -147,7 +146,7 @@ package
 			curScreen.setHandler(this, netHandler);
 		}
 		
-		public function loadScreen(screenCl:Class): void
+		public function loadScreen(screenCl:Class, viaNet:Boolean=false): void
 		{
 			// delete current screen
 			mStarling.stage.removeChild(curScreen);
@@ -170,16 +169,26 @@ package
 					camHandler.setLocalVisibility(false);
 					camHandler.setRemoteImage(new Rectangle((screenWidth * 0.75), (screenHeight * 0.6), 400, 400));
 					
+					if (!viaNet) {
+						netHandler.sendMessage("startGameViaNet", null);
+						netHandler.setNetStatusVisibility(false);
+					}
+					
 					break;
 				}
 				case GameOver:
 					camHandler.setLocalVisibility(true);
 					camHandler.setRemoteImage(new Rectangle(210, 30, 200, 200));
 					
+					if (!viaNet) {
+						netHandler.sendMessage("gameOverViaNet", null);
+						netHandler.setNetStatusVisibility(true);
+					}
+					
 					break;
 			}
 		}
-		
+				
 		/**
 		 * ------------------------------------------------------------
 		 * Handling External Data
@@ -205,6 +214,10 @@ package
 			ldr.removeEventListener(flash.events.Event.COMPLETE, loadComplete);
 			ldr.removeEventListener(IOErrorEvent.IO_ERROR, loadError);
 			trace("Loading from external data completed");
+			
+			NetworkHandler.localID = xmlContent.General.location;
+			
+			initHFUBloxx();
 		}
 		
 		/**
@@ -270,14 +283,7 @@ package
 		}
 		
 
-		private function onEnterFrame(e:flash.events.Event):void {
-		
-			if (gameOver) {
-				loadScreen(GameOver);
-				gameOver = false;
-			}
-			
-			
+		private function onEnterFrame(e:flash.events.Event):void {		
 			//Start the Game with "X" and "start"
 			if((xboxController.start.pressed || xboxController.x.pressed)) {
 				loadScreen(MainGame);

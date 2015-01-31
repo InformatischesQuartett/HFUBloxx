@@ -144,7 +144,7 @@ package GameObjects {
 				if (this.getBounds(this.parent).intersects(oCollider.getBounds(oCollider.parent)))
 				{
 					//trace("collision");
-					if ((oCollider as Hat).colorAttribute == MainGame.currentPipe.colorAttribute) {
+					if ((oCollider as Hat).colorAttribute == MainGame.otherPipe) {
 						MainGame.currentPipe.setRemoveMe(true);
 						trace("same color");
 					}

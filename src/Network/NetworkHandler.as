@@ -6,6 +6,9 @@ package Network
 	import flash.net.NetStream;
 	import flash.utils.Timer;
 	
+	import Screens.GameOver;
+	import Screens.MainGame;
+	
 	import Webcam.CamHandler;
 	
 	import starling.display.Sprite;
@@ -25,9 +28,10 @@ package Network
 		
 		private var netStatus: TextField;
 		
+		private var gameHandler: HFUBloxx;
 		private var camHandler: CamHandler;
   
-		public static var localID: String = "Furtwangen";
+		public static var localID: String = "Schwenningen";
 		public static var remoteID: String;
 		
 		public function NetworkHandler()
@@ -76,9 +80,19 @@ package Network
 				netConnection.close();
 		}
 		
+		public function setGameHandler(handler:HFUBloxx):void
+		{
+			gameHandler = handler;
+		}
+		
 		public function setCamHandler(handler:CamHandler):void
 		{
 			camHandler = handler;
+		}
+		
+		public function setNetStatusVisibility(visible:Boolean):void
+		{
+			netStatus.visible = visible;
 		}
 		
 		public function sendMessage(type:String, message:*):void
@@ -177,7 +191,7 @@ package Network
 			
 			updateStatus(event.info.code + appendix);
 		}
-		
+				
 		private function netStreamRecvStatus(event:NetStatusEvent):void
 		{
 			var appendix:String = " (netRecvStream)";
@@ -198,6 +212,24 @@ package Network
 			}
 			
 			updateStatus(event.info.code + appendix);
+		}
+		
+		public function startGameViaNet(msg:Object): void
+		{
+			if (!isLocalMsg(msg))
+				gameHandler.loadScreen(MainGame, true)
+		}
+		
+		public function gameOverViaNet(msg:Object): void
+		{
+			if (!isLocalMsg(msg))
+				gameHandler.loadScreen(GameOver, true);
+		}
+		
+		public function otherPipeColor(msg:Object): void
+		{
+			if (!isLocalMsg(msg))
+				MainGame.otherPipe = msg.data;
 		}
 	}
 }

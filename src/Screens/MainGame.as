@@ -1,7 +1,9 @@
 package Screens {
 
 	import flash.events.Event;
-	import starling.text.TextField;
+	import flash.media.Sound;
+	import flash.media.SoundChannel;
+	import flash.net.URLRequest;
 	
 	import GameObjects.Bloxx;
 	import GameObjects.Hat;
@@ -10,6 +12,7 @@ package Screens {
 	
 	import starling.core.Starling;
 	import starling.display.Image;
+	import starling.text.TextField;
 	
 	
 	public class MainGame extends BloxxScreen {
@@ -20,6 +23,7 @@ package Screens {
 		private var colorPlayerArray : Array;
 		
 		public static var currentPipe : Pipe;
+		public static var otherPipe: String;
 		
 		private var gameScore : int = 0;
 		
@@ -47,6 +51,10 @@ package Screens {
 		
 		// 2D-Array
 		private var gridArray : Array;
+		
+		
+		public var gameSound:Sound = new Sound();
+		public var gameChannel:SoundChannel = new SoundChannel();
 		
 		/**
 		 * Constructor of the MainGame
@@ -103,6 +111,9 @@ package Screens {
 			drawGUI ();
 			
 			pipeCount = 0;
+			
+			gameSound.load(new URLRequest("gameSound.mp3"));
+			gameChannel = gameSound.play();		
 		
 		}//end constructor
 		
@@ -221,6 +232,8 @@ package Screens {
 			currentPipe = new Pipe(colorArray[tempNo], pipeCount);
 			this.addChild(currentPipe);
 			pipeCount++;
+			
+			netHandler.sendMessage("otherPipeColor", colorArray[tempNo]);
 		}
 		
 		/**
@@ -244,7 +257,7 @@ package Screens {
 		 **/
 		public function checkPlayerState () : void {
 			if (playerOne.playerLife <= 0) {
-				HFUBloxx.gameOver = true; 
+				gameHandler.loadScreen(GameOver); 
 			}
 		}
 		
