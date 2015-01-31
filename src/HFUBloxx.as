@@ -35,11 +35,15 @@ package
 	/**
 	 This is the main document class of the game HFUBloxx.
 	 It includes the main config of the game.
-	 Authors: Fabian Gärtner, Ramo Gündogdu, Sarah Häfele
+	 Authors: Fabian Gärtner, Ramazan Gündogdu, Sarah Häfele
 	 Assets: Sandra Beuck
 	 Concept: Sandra Beuck, Felix Eckerle, Felix Prosch
 	 
+	 Group: Sandra Beuck (DIM), Ramazan Gündogdu (MIM), Felix Eckerle (DIM) and Felix Prosch (DIM)
+	 
 	 Developed for the class Interaction Design for DIM and MIM at Hochschule Furtwangen University in 2014.
+	 
+	 The executable Flash-File is in ../HFUBloxx/bin-release/HFUBloxx.exe
 	 **/
 	public class HFUBloxx extends Sprite {
 		
