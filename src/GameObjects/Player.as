@@ -9,6 +9,8 @@ package GameObjects {
 	import flash.media.SoundChannel;
 	import flash.net.URLRequest;
 	
+	import Network.NetworkHandler;
+	
 	import Screens.MainGame;
 	
 	import starling.core.Starling;
@@ -48,12 +50,16 @@ package GameObjects {
 		public var jumpSound:Sound = new Sound();
 		public var jumpChannel:SoundChannel = new SoundChannel();
 		
+		private var netHandler:NetworkHandler;
+		
 		/**
 		 * Constructor
 		 **/
-		public function Player(color : String) {
+		public function Player(color : String, handler: NetworkHandler) {
 			super();
 			
+			netHandler = handler;
+			trace(handler);
 			//set up event listener which is called per frame
 			Starling.current.nativeStage.addEventListener(Event.ENTER_FRAME, update);
 			
@@ -145,7 +151,7 @@ package GameObjects {
 				{
 					//trace("collision");
 					if ((oCollider as Hat).colorAttribute == MainGame.otherPipe) {
-						MainGame.currentPipe.setRemoveMe(true);
+						netHandler.sendMessage("removePipe", null);
 						trace("same color");
 					}
 					oCollider.setRemoveMe(true);

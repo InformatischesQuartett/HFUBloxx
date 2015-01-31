@@ -10,6 +10,8 @@ package Screens {
 	import GameObjects.Pipe;
 	import GameObjects.Player;
 	
+	import Network.NetworkHandler;
+	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.text.TextField;
@@ -59,9 +61,9 @@ package Screens {
 		/**
 		 * Constructor of the MainGame
 		 */
-		public function MainGame() {
+		public function MainGame(handler:NetworkHandler) {
 			//calls super class' constructor
-			super();
+			super(handler);
 			
 			Starling.current.nativeStage.addEventListener(Event.ENTER_FRAME, update);
 			
@@ -265,7 +267,7 @@ package Screens {
 		 * Spawn Players.
 		 **/
 		public function spawnPlayers() : Player {
-			playerOne = new Player("avatar_Yellow");
+			playerOne = new Player("avatar_Yellow", netHandler);
 			return playerOne;
 		}
 		

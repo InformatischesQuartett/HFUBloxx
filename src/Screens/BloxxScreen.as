@@ -9,9 +9,11 @@ package Screens
 		protected var gameHandler:HFUBloxx;
 		protected var netHandler:NetworkHandler;
 		
-		public function BloxxScreen()
+		public function BloxxScreen(net:NetworkHandler)
 		{
 			super();
+			
+			netHandler = net;
 		}
 		
 		public function setHandler(game:HFUBloxx, net:NetworkHandler):void

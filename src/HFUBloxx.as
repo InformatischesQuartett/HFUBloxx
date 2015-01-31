@@ -153,7 +153,7 @@ package
 			curScreen = null;
 			
 			// create new screen
-			var screen:BloxxScreen = new screenCl();
+			var screen:BloxxScreen = new screenCl(netHandler);
 			screen.setHandler(this, netHandler);
 			
 			mStarling.stage.addChild(screen);

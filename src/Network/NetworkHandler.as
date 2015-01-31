@@ -231,5 +231,11 @@ package Network
 			if (!isLocalMsg(msg))
 				MainGame.otherPipe = msg.data;
 		}
+		
+		public function removePipe(msg:Object): void
+		{
+			if (!isLocalMsg(msg))
+				MainGame.currentPipe.setRemoveMe(true);
+		}
 	}
 }

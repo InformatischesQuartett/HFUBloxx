@@ -1,5 +1,7 @@
 package Screens
 {
+	import Network.NetworkHandler;
+	
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -8,10 +10,10 @@ package Screens
 	public class GameOver extends BloxxScreen
 	{
 		private var score : int;
-		public function GameOver()
+		public function GameOver(handler: NetworkHandler)
 		{
+			super(handler);
 			
-			super();
 			var bg:Image = new Image(Assets.getTexture("bg"));
 			this.addChild(bg);
 			

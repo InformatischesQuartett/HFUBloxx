@@ -1,17 +1,20 @@
 package Screens
 {
+	import flash.media.Sound;
+	import flash.media.SoundChannel;
+	import flash.net.URLRequest;
+	
+	import Network.NetworkHandler;
+	
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.events.Event;
-	import flash.media.Sound;
-	import flash.net.URLRequest;
-	import flash.media.SoundChannel;
 	
 	public class MainMenu extends BloxxScreen
 	{		
 		public function MainMenu()
 		{
-			super();
+			super(null);
 
 			var bg : Image = new Image(Assets.getTexture("bg"));
 			bg.width = HFUBloxx.screenWidth;
